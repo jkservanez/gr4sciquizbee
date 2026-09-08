@@ -1,11 +1,9 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>My Website</title>
+    <title>GR4 Science Quiz Bee</title>
 
     <style>
         * {
@@ -24,19 +22,37 @@
         }
 
         .container {
+            width: 90%;
+            max-width: 600px;
             text-align: center;
-            padding: 40px;
         }
 
         h1 {
-            margin: 0 0 15px;
-            font-size: 48px;
+            margin-bottom: 35px;
+            font-size: 42px;
         }
 
-        p {
-            margin: 0;
-            color: #aaa;
-            font-size: 18px;
+        .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .menu a {
+            display: block;
+            padding: 18px 25px;
+            background: #222;
+            border: 1px solid #444;
+            border-radius: 10px;
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            transition: 0.2s;
+        }
+
+        .menu a:hover {
+            background: #333;
+            transform: translateY(-2px);
         }
     </style>
 </head>
@@ -44,10 +60,16 @@
 <body>
 
     <div class="container">
-        <h1>Hello World!</h1>
-        <p>My GitHub Pages website is working.</p>
+
+        <h1>GR4 Science Quiz Bee</h1>
+
+        <div class="menu">
+            <a href="quiz.html">Quiz</a>
+            <a href="reviewer.html">Reviewer</a>
+            <a href="scispelling.html">Science Spelling</a>
+        </div>
+
     </div>
 
 </body>
 </html>
-```
