@@ -1,0 +1,2123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Science Spelling Bee Challenge</title>
+    <style>
+        :root {
+            --primary: #8b5cf6;
+            --primary-hover: #7c3aed;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --correct: #16a34a;
+            --correct-bg: #dcfce7;
+            --incorrect: #dc2626;
+            --incorrect-bg: #fee2e2;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        [data-theme="dark"] {
+            --primary: #a78bfa;
+            --primary-hover: #c4b5fd;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --correct: #4ade80;
+            --correct-bg: #064e3b;
+            --incorrect: #f87171;
+            --incorrect-bg: #7f1d1d;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            padding: 20px;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        .theme-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .screen {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Start Screen Settings */
+        .start-screen {
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .start-screen h2 {
+            margin-bottom: 15px;
+        }
+
+        .start-screen p {
+            color: var(--text-muted);
+            margin-bottom: 25px;
+        }
+
+        .info-list {
+            text-align: left;
+            max-width: 480px;
+            margin: 0 auto 20px auto;
+            background: var(--bg);
+            padding: 15px 25px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .info-list li {
+            margin-bottom: 8px;
+        }
+
+        .settings-panel {
+            max-width: 480px;
+            margin: 0 auto 25px auto;
+            background: var(--bg);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+
+        .settings-panel h3 {
+            font-size: 1.05rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 8px;
+        }
+
+        .setting-group {
+            margin-bottom: 12px;
+        }
+
+        .setting-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+        }
+
+        .select-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--card-bg);
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .checkbox-group input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* Quiz Screen */
+        .quiz-progress {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .round-badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .badge-easy { background: #dbeafe; color: #1e40af; }
+        .badge-medium { background: #fef3c7; color: #92400e; }
+        .badge-hard { background: #fee2e2; color: #991b1b; }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 25px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--primary);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .audio-control-panel {
+            text-align: center;
+            margin-bottom: 25px;
+            background: var(--bg);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .audio-btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .audio-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            padding: 10px 16px;
+        }
+
+        .audio-hint {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .clue-box {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: var(--bg);
+            border-left: 4px solid var(--primary);
+            border-radius: 4px;
+        }
+
+        .clue-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .clue-text {
+            font-size: 1.05rem;
+            font-weight: 500;
+        }
+
+        .spelling-input-container {
+            margin-bottom: 25px;
+        }
+
+        .spelling-input {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg);
+            color: var(--text-main);
+            font-size: 1.25rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            outline: none;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .spelling-input:focus {
+            border-color: var(--primary);
+        }
+
+        .quiz-footer {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        /* Results Screen */
+        .results-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 15px auto;
+        }
+
+        .score-num {
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .score-label {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .breakdown-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .breakdown-card {
+            background: var(--bg);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .breakdown-card h4 {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        .breakdown-card p {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .review-section {
+            margin-top: 30px;
+        }
+
+        .review-section h3 {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .review-item {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .review-item.correct {
+            background-color: var(--correct-bg);
+            border-color: var(--correct);
+        }
+
+        .review-item.incorrect {
+            background-color: var(--incorrect-bg);
+            border-color: var(--incorrect);
+        }
+
+        .review-q {
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .review-ans {
+            font-size: 0.95rem;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Science Spelling Bee</h1>
+        <button class="theme-btn" onclick="toggleTheme()">Theme</button>
+    </header>
+
+    <!-- START SCREEN -->
+    <div id="startScreen" class="screen start-screen">
+        <h2>Welcome to the Science Spelling Bee!</h2>
+        <p>Test your spelling precision across three levels of scientific vocabulary:</p>
+        
+        <ul class="info-list">
+            <li><strong>Easy Round (15 Words):</strong> Fundamental science terms</li>
+            <li><strong>Medium Round (15 Words):</strong> Intermediate science vocabulary</li>
+            <li><strong>Hard Round (10 Words):</strong> Challenging scientific terms</li>
+        </ul>
+
+        <!-- VOICE SELECTION PANEL -->
+        <div class="settings-panel">
+            <h3>Voice & Audio Settings</h3>
+            <div class="setting-group">
+                <label for="voiceSelect">Pronunciation Voice:</label>
+                <select id="voiceSelect" class="select-input">
+                    <option value="">Loading voices...</option>
+                </select>
+            </div>
+            
+            <div class="setting-group">
+                <label for="speedSelect">Speech Speed:</label>
+                <select id="speedSelect" class="select-input">
+                    <option value="1">Normal (1.0x)</option>
+                    <option value="0.85" selected>Clear & Slow (0.85x)</option>
+                    <option value="0.7">Very Slow (0.7x)</option>
+                </select>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="readClueCheckbox" checked>
+                <label for="readClueCheckbox" style="margin-bottom: 0; font-weight: 500;">Read question clue before pronouncing word</label>
+            </div>
+
+            <button class="btn" style="padding: 6px 12px; font-size: 0.85rem; margin-top: 15px;" onclick="testSelectedVoice()">
+                🔊 Test Audio Setup
+            </button>
+        </div>
+
+        <button class="btn" onclick="startSpellingBee()">Start Spelling Bee</button>
+    </div>
+
+    <!-- QUIZ SCREEN -->
+    <div id="quizScreen" class="screen hidden">
+        <div class="quiz-progress">
+            <span id="progressText">Word 1 of 40</span>
+            <span id="roundBadge" class="round-badge badge-easy">Easy Round</span>
+        </div>
+        
+        <div class="progress-bar-bg">
+            <div id="progressBar" class="progress-bar-fill"></div>
+        </div>
+
+        <div class="audio-control-panel">
+            <div class="audio-btn-group">
+                <button class="btn audio-btn" onclick="speakClueAndWord()">
+                    📢 Read Clue & Word
+                </button>
+                <button class="btn audio-btn" style="background-color: #6d28d9;" onclick="speakWordOnly()">
+                    🎯 Repeat Word Only
+                </button>
+            </div>
+            <div class="audio-hint">Click a button to hear the question or target word</div>
+        </div>
+
+        <div class="clue-box">
+            <div class="clue-label">Definition / Clue</div>
+            <div id="clueText" class="clue-text">Loading clue...</div>
+        </div>
+
+        <div class="spelling-input-container">
+            <input type="text" id="spellingInput" class="spelling-input" placeholder="TYPE YOUR SPELLING HERE" autocomplete="off" autofocus>
+        </div>
+
+        <div class="quiz-footer">
+            <button id="nextBtn" class="btn" onclick="handleNext()">Submit Spelling</button>
+        </div>
+    </div>
+
+    <!-- RESULTS SCREEN -->
+    <div id="resultsScreen" class="screen hidden">
+        <div class="results-header">
+            <h2>Spelling Bee Complete!</h2>
+            <div class="score-circle">
+                <span id="finalScore" class="score-num">0/40</span>
+                <span id="finalPercent" class="score-label">0%</span>
+            </div>
+            <p id="scoreMessage">Great job!</p>
+        </div>
+
+        <div class="breakdown-grid">
+            <div class="breakdown-card">
+                <h4>Easy</h4>
+                <p id="easyScore">0/15</p>
+            </div>
+            <div class="breakdown-card">
+                <h4>Medium</h4>
+                <p id="mediumScore">0/15</p>
+            </div>
+            <div class="breakdown-card">
+                <h4>Hard</h4>
+                <p id="hardScore">0/10</p>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn" onclick="returnToStart()">Configure / Play Again</button>
+        </div>
+
+        <div class="review-section">
+            <h3>Spelling Breakdown</h3>
+            <div id="reviewContainer"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Word Database grouped by curated spelling difficulty. Difficulty is manually assigned; words are selected randomly within each group.
+const wordBank = {
+    "easy": [
+        {
+            "word": "Brain",
+            "clue": "Which organ serves as the command center of the human body?"
+        },
+        {
+            "word": "Femur",
+            "clue": "What is the longest and strongest bone in the human body?"
+        },
+        {
+            "word": "Heart",
+            "clue": "What internal organ pumps blood throughout the entire body?"
+        },
+        {
+            "word": "Kidneys",
+            "clue": "Which organs filter waste products and excess liquid from the blood?"
+        },
+        {
+            "word": "Liver",
+            "clue": "Which organ produces bile to help digest fats?"
+        },
+        {
+            "word": "Lungs",
+            "clue": "What is the main organ of the respiratory system used for gas exchange?"
+        },
+        {
+            "word": "Stomach",
+            "clue": "What muscular organ churns food and mixes it with acidic digestive juices?"
+        },
+        {
+            "word": "Skull",
+            "clue": "What skeletal organ protects the human brain from injury?"
+        },
+        {
+            "word": "Calcium",
+            "clue": "What mineral stored in bones makes them hard and strong?"
+        },
+        {
+            "word": "Roots",
+            "clue": "What plant structure absorbs water and minerals from the soil?"
+        },
+        {
+            "word": "Leaves",
+            "clue": "What plant structures contain tiny pores called stomata for gas exchange?"
+        },
+        {
+            "word": "Oxygen",
+            "clue": "What gas do plants release into the atmosphere during photosynthesis?"
+        },
+        {
+            "word": "Herbivores",
+            "clue": "What do you call animals that eat plants exclusively?"
+        },
+        {
+            "word": "Carnivores",
+            "clue": "What do you call animals that eat only other animals?"
+        },
+        {
+            "word": "Omnivores",
+            "clue": "What do you call organisms that eat both plants and animals?"
+        },
+        {
+            "word": "Reptiles",
+            "clue": "Which animal class includes cold-blooded vertebrates with dry, scaly skin?"
+        },
+        {
+            "word": "Amphibians",
+            "clue": "Which vertebrate class spends part of its life in water and part on land?"
+        },
+        {
+            "word": "Forest",
+            "clue": "What natural habitat is characterized by dense tree growth and abundant wildlife?"
+        },
+        {
+            "word": "Predator",
+            "clue": "What do you call an animal that hunts and feeds on other animals?"
+        },
+        {
+            "word": "Prey",
+            "clue": "What do you call an animal that is hunted and eaten by a predator?"
+        },
+        {
+            "word": "Gills",
+            "clue": "What body structures do fish use to extract dissolved oxygen from water?"
+        },
+        {
+            "word": "Fins",
+            "clue": "What structural adaptation helps fish balance and steer while swimming?"
+        },
+        {
+            "word": "Feathers",
+            "clue": "What adaptation helps birds fly efficiently, stay warm, and repel water?"
+        },
+        {
+            "word": "Matter",
+            "clue": "What is anything that occupies space and has mass called?"
+        },
+        {
+            "word": "Solid",
+            "clue": "What state of matter has a definite shape and a definite volume?"
+        },
+        {
+            "word": "Liquid",
+            "clue": "What state of matter has a definite volume but takes the shape of its container?"
+        },
+        {
+            "word": "Gas",
+            "clue": "What state of matter has neither a definite shape nor a definite volume?"
+        },
+        {
+            "word": "Melting",
+            "clue": "What physical change occurs when a solid turns into a liquid by absorbing heat?"
+        },
+        {
+            "word": "Freezing",
+            "clue": "What physical change occurs when a liquid turns into a solid by releasing heat?"
+        },
+        {
+            "word": "Force",
+            "clue": "What push or pull action on an object can change its speed, direction, or shape?"
+        },
+        {
+            "word": "Friction",
+            "clue": "What force resists the relative motion of two surfaces sliding against each other?"
+        },
+        {
+            "word": "Gravity",
+            "clue": "What invisible force pulls objects toward the center of the Earth?"
+        },
+        {
+            "word": "Magnetism",
+            "clue": "What attractive or repulsive force acts between magnetic poles?"
+        },
+        {
+            "word": "Lever",
+            "clue": "Which simple machine consists of a rigid bar pivoting on a fixed fulcrum?"
+        },
+        {
+            "word": "Pulley",
+            "clue": "What simple machine consists of a wheel with a grooved rim and a rope running through it?"
+        },
+        {
+            "word": "Wedge",
+            "clue": "What simple machine consists of two inclined planes placed back-to-back to split objects?"
+        },
+        {
+            "word": "Crust",
+            "clue": "What is the outermost solid layer of the Earth?"
+        },
+        {
+            "word": "Mantle",
+            "clue": "What thick layer of hot, semi-solid rock lies directly below Earth’s crust?"
+        },
+        {
+            "word": "Moon",
+            "clue": "What natural satellite orbits planet Earth?"
+        },
+        {
+            "word": "Mars",
+            "clue": "What planet is known as the Red Planet due to iron oxide on its surface?"
+        },
+        {
+            "word": "organism",
+            "clue": "Any living thing."
+        },
+        {
+            "word": "environment",
+            "clue": "Everything surrounding a living thing."
+        },
+        {
+            "word": "habitat",
+            "clue": "The natural home of an organism."
+        },
+        {
+            "word": "adaptation",
+            "clue": "A feature that helps an organism survive."
+        },
+        {
+            "word": "species",
+            "clue": "A group of similar organisms that can reproduce."
+        },
+        {
+            "word": "population",
+            "clue": "Organisms of the same species living in an area."
+        },
+        {
+            "word": "community",
+            "clue": "Different populations living together in an area."
+        },
+        {
+            "word": "ecosystem",
+            "clue": "Living and nonliving things interacting in an area."
+        },
+        {
+            "word": "biodiversity",
+            "clue": "The variety of living things in an area."
+        },
+        {
+            "word": "classification",
+            "clue": "Grouping organisms based on their characteristics."
+        },
+        {
+            "word": "vertebrate",
+            "clue": "An animal with a backbone."
+        },
+        {
+            "word": "invertebrate",
+            "clue": "An animal without a backbone."
+        },
+        {
+            "word": "amphibian",
+            "clue": "An animal that can live in water and on land."
+        },
+        {
+            "word": "reptile",
+            "clue": "A cold-blooded animal with scales."
+        },
+        {
+            "word": "mammal",
+            "clue": "An animal that feeds its young with milk."
+        },
+        {
+            "word": "offspring",
+            "clue": "The young or children of living things."
+        },
+        {
+            "word": "reproduction",
+            "clue": "The process of producing offspring."
+        },
+        {
+            "word": "nutrition",
+            "clue": "The process of getting nutrients from food."
+        },
+        {
+            "word": "respiration",
+            "clue": "A process cells use to release energy from food."
+        },
+        {
+            "word": "digestion",
+            "clue": "The process of breaking down food."
+        },
+        {
+            "word": "circulation",
+            "clue": "The movement of blood throughout the body."
+        },
+        {
+            "word": "skeleton",
+            "clue": "The framework of bones supporting the body."
+        },
+        {
+            "word": "muscular",
+            "clue": "Related to muscles."
+        },
+        {
+            "word": "digestive",
+            "clue": "Related to the process of breaking down food."
+        },
+        {
+            "word": "circulatory",
+            "clue": "Related to the movement of blood."
+        },
+        {
+            "word": "respiratory",
+            "clue": "Related to breathing."
+        },
+        {
+            "word": "excretory",
+            "clue": "Related to removing wastes from the body."
+        },
+        {
+            "word": "nervous",
+            "clue": "Related to the brain, spinal cord, and nerves."
+        },
+        {
+            "word": "microscope",
+            "clue": "An instrument used to see very small objects."
+        },
+        {
+            "word": "magnification",
+            "clue": "Making an object appear larger."
+        },
+        {
+            "word": "observation",
+            "clue": "Information obtained by carefully examining something."
+        },
+        {
+            "word": "investigation",
+            "clue": "A careful study to discover information."
+        },
+        {
+            "word": "hypothesis",
+            "clue": "A possible explanation that can be tested."
+        },
+        {
+            "word": "experiment",
+            "clue": "A scientific test used to answer a question."
+        },
+        {
+            "word": "measurement",
+            "clue": "The process of finding the size or amount of something."
+        },
+        {
+            "word": "precipitation",
+            "clue": "Water falling from clouds as rain, snow, sleet, or hail."
+        },
+        {
+            "word": "water cycle",
+            "clue": "The continuous movement of water through Earth and the atmosphere."
+        },
+        {
+            "word": "climate",
+            "clue": "The usual weather pattern of a place over a long time."
+        },
+        {
+            "word": "meteorologist",
+            "clue": "A scientist who studies weather."
+        },
+        {
+            "word": "forecast",
+            "clue": "A prediction about future weather."
+        }
+    ],
+    "medium": [
+        {
+            "word": "Ligaments",
+            "clue": "What structures connect bones to other bones at a joint?"
+        },
+        {
+            "word": "Tendons",
+            "clue": "What structures connect muscles to bones?"
+        },
+        {
+            "word": "Trachea",
+            "clue": "What windpipe connects the larynx to the lungs?"
+        },
+        {
+            "word": "Diaphragm",
+            "clue": "What dome-shaped muscle below the lungs contracts and relaxes during breathing?"
+        },
+        {
+            "word": "Nephrons",
+            "clue": "What tiny filtering units inside the kidneys remove waste from the blood?"
+        },
+        {
+            "word": "Alveoli",
+            "clue": "What tiny air sacs in the lungs are the site of oxygen and carbon dioxide exchange?"
+        },
+        {
+            "word": "Arteries",
+            "clue": "Which blood vessels carry oxygenated blood away from the heart?"
+        },
+        {
+            "word": "Veins",
+            "clue": "Which blood vessels return deoxygenated blood back to the heart?"
+        },
+        {
+            "word": "Capillaries",
+            "clue": "What are the smallest blood vessels where exchange of gases and nutrients occurs?"
+        },
+        {
+            "word": "Hepatitis",
+            "clue": "What illness is characterized by inflammation of the liver, often caused by a virus?"
+        },
+        {
+            "word": "Stethoscope",
+            "clue": "What medical device do doctors use to listen to heartbeats and lung sounds?"
+        },
+        {
+            "word": "Cartilage",
+            "clue": "What flexible tissue cushions the ends of bones at joints to prevent friction?"
+        },
+        {
+            "word": "Epidermis",
+            "clue": "What is the outer layer of human skin called?"
+        },
+        {
+            "word": "Melanin",
+            "clue": "What pigment in the skin gives it color and helps protect it from ultraviolet radiation?"
+        },
+        {
+            "word": "Photosynthesis",
+            "clue": "What process do plants use to create food using sunlight, water, and carbon dioxide?"
+        },
+        {
+            "word": "Chlorophyll",
+            "clue": "What green pigment in plant leaves absorbs sunlight for food production?"
+        },
+        {
+            "word": "Germination",
+            "clue": "What is the sprouting of a seed into a young plant called?"
+        },
+        {
+            "word": "Producers",
+            "clue": "What role do plants fill in a food chain because they manufacture their own food?"
+        },
+        {
+            "word": "Decomposers",
+            "clue": "What organisms break down dead plants and animals into nutrients?"
+        },
+        {
+            "word": "Xylem",
+            "clue": "What specialized tissue transports water from roots to the rest of the plant?"
+        },
+        {
+            "word": "Phloem",
+            "clue": "What specialized tissue carries food synthesized in leaves to all plant parts?"
+        },
+        {
+            "word": "Camouflage",
+            "clue": "What adaptation allows animals like chameleons to blend into their surroundings?"
+        },
+        {
+            "word": "Endotherms",
+            "clue": "What term describes animals that regulate their body temperature internally?"
+        },
+        {
+            "word": "Ectotherms",
+            "clue": "What term describes animals whose body temperature changes with the environment?"
+        },
+        {
+            "word": "Hibernation",
+            "clue": "What state of dormancy helps certain animals survive cold winters?"
+        },
+        {
+            "word": "Migration",
+            "clue": "What seasonal movement do animal populations make from one region to another?"
+        },
+        {
+            "word": "Cuticle",
+            "clue": "What specialized waxy layer covers leaves to prevent water evaporation?"
+        },
+        {
+            "word": "Evaporation",
+            "clue": "What physical process turns a liquid into a gas when heat is applied?"
+        },
+        {
+            "word": "Condensation",
+            "clue": "What process occurs when water vapor cools and transforms back into liquid water?"
+        },
+        {
+            "word": "Buoyancy",
+            "clue": "What force helps support an object in a fluid and opposes its weight?"
+        },
+        {
+            "word": "Temperature",
+            "clue": "What measure indicates the degree of hotness or coldness of a substance?"
+        },
+        {
+            "word": "Thermometer",
+            "clue": "What instrument is used to accurately measure temperature?"
+        },
+        {
+            "word": "Conduction",
+            "clue": "What heat transfer method occurs through direct physical contact within solids?"
+        },
+        {
+            "word": "Convection",
+            "clue": "What heat transfer method occurs through fluid movement in liquids and gases?"
+        },
+        {
+            "word": "Radiation",
+            "clue": "What heat transfer method travels through electromagnetic waves without requiring a physical medium?"
+        },
+        {
+            "word": "Refraction",
+            "clue": "What bending of light rays occurs as they pass from one transparent medium to another?"
+        },
+        {
+            "word": "Atmosphere",
+            "clue": "What envelope of gases surrounds the planet Earth?"
+        },
+        {
+            "word": "Humidity",
+            "clue": "What atmospheric parameter measures the amount of water vapor present in the air?"
+        },
+        {
+            "word": "Barometer",
+            "clue": "What weather instrument measures atmospheric pressure?"
+        },
+        {
+            "word": "Anemometer",
+            "clue": "What weather instrument measures wind speed?"
+        },
+        {
+            "word": "electricity",
+            "clue": "A form of energy caused by electric charges."
+        },
+        {
+            "word": "magnetic",
+            "clue": "Able to attract certain materials."
+        },
+        {
+            "word": "conductor",
+            "clue": "A material that allows heat or electricity to pass through easily."
+        },
+        {
+            "word": "insulator",
+            "clue": "A material that slows the movement of heat or electricity."
+        },
+        {
+            "word": "vibration",
+            "clue": "A rapid back-and-forth movement."
+        },
+        {
+            "word": "frequency",
+            "clue": "The number of vibrations or waves occurring in a certain time."
+        },
+        {
+            "word": "reflection",
+            "clue": "The bouncing back of light or sound."
+        },
+        {
+            "word": "transparent",
+            "clue": "Allowing light to pass through clearly."
+        },
+        {
+            "word": "translucent",
+            "clue": "Allowing some light to pass through."
+        },
+        {
+            "word": "opaque",
+            "clue": "Blocking light from passing through."
+        },
+        {
+            "word": "motion",
+            "clue": "A change in an object's position."
+        },
+        {
+            "word": "velocity",
+            "clue": "The speed and direction of an object's motion."
+        },
+        {
+            "word": "energy",
+            "clue": "The ability to cause change or do work."
+        },
+        {
+            "word": "potential",
+            "clue": "Stored energy an object has because of its position or condition."
+        },
+        {
+            "word": "kinetic",
+            "clue": "Relating to energy of motion."
+        },
+        {
+            "word": "mechanical",
+            "clue": "Related to machines or movement."
+        },
+        {
+            "word": "renewable",
+            "clue": "A resource that can naturally be replaced."
+        },
+        {
+            "word": "nonrenewable",
+            "clue": "A resource that cannot be quickly replaced."
+        },
+        {
+            "word": "resource",
+            "clue": "Something useful that people or organisms need."
+        },
+        {
+            "word": "conservation",
+            "clue": "Protection and careful use of natural resources."
+        },
+        {
+            "word": "sustainability",
+            "clue": "Using resources responsibly so they remain available in the future."
+        },
+        {
+            "word": "biodegradable",
+            "clue": "Able to break down naturally."
+        },
+        {
+            "word": "decomposition",
+            "clue": "The breakdown of dead organisms and materials."
+        },
+        {
+            "word": "decomposer",
+            "clue": "An organism that breaks down dead matter."
+        },
+        {
+            "word": "pollution",
+            "clue": "Harmful substances added to the environment."
+        },
+        {
+            "word": "contamination",
+            "clue": "Making something harmful or unclean by adding pollutants."
+        },
+        {
+            "word": "deforestation",
+            "clue": "The clearing or removal of forests."
+        },
+        {
+            "word": "reforestation",
+            "clue": "Planting trees again in areas where forests were removed."
+        },
+        {
+            "word": "erosion",
+            "clue": "The wearing away and movement of soil and rock."
+        },
+        {
+            "word": "weathering",
+            "clue": "The breaking down of rocks at Earth's surface."
+        },
+        {
+            "word": "sediment",
+            "clue": "Small pieces of rock, soil, or other material carried by water or wind."
+        },
+        {
+            "word": "earthquake",
+            "clue": "Shaking of Earth's surface caused by movement underground."
+        },
+        {
+            "word": "volcano",
+            "clue": "An opening where lava, ash, and gases may escape from Earth."
+        },
+        {
+            "word": "magnitude",
+            "clue": "A measure of the strength or size of an earthquake."
+        },
+        {
+            "word": "tectonic",
+            "clue": "Related to the large moving plates of Earth's crust."
+        },
+        {
+            "word": "mineral",
+            "clue": "A naturally occurring nonliving substance found in Earth."
+        },
+        {
+            "word": "fossil",
+            "clue": "Preserved remains or traces of ancient living things."
+        },
+        {
+            "word": "paleontologist",
+            "clue": "A scientist who studies fossils and ancient life."
+        },
+        {
+            "word": "metamorphosis",
+            "clue": "A major change in an animal's body during its life cycle."
+        },
+        {
+            "word": "herbivore",
+            "clue": "An animal that mainly eats plants."
+        },
+        {
+            "word": "carnivore",
+            "clue": "An animal that mainly eats other animals."
+        },
+        {
+            "word": "omnivore",
+            "clue": "An animal that eats both plants and animals."
+        },
+        {
+            "word": "food chain",
+            "clue": "A sequence showing how energy passes from one organism to another."
+        },
+        {
+            "word": "food web",
+            "clue": "A network of connected food chains."
+        },
+        {
+            "word": "producer",
+            "clue": "An organism, usually a plant, that makes its own food."
+        },
+        {
+            "word": "consumer",
+            "clue": "An organism that gets energy by eating other organisms."
+        },
+        {
+            "word": "energy transfer",
+            "clue": "The movement of energy from one organism or object to another."
+        },
+        {
+            "word": "symbiosis",
+            "clue": "A close relationship between two different organisms."
+        },
+        {
+            "word": "competition",
+            "clue": "A struggle between organisms for limited resources."
+        },
+        {
+            "word": "carbohydrate",
+            "clue": "A nutrient that provides energy for the body."
+        },
+        {
+            "word": "protein",
+            "clue": "A nutrient needed for growth and repair."
+        },
+        {
+            "word": "vitamin",
+            "clue": "A substance needed by the body to stay healthy."
+        },
+        {
+            "word": "microorganism",
+            "clue": "A living thing too small to see without a microscope."
+        },
+        {
+            "word": "bacteria",
+            "clue": "Tiny organisms found in many environments."
+        },
+        {
+            "word": "antibiotic",
+            "clue": "A medicine used to fight certain bacterial infections."
+        }
+    ],
+    "hard": [
+        {
+            "word": "Sublimation",
+            "clue": "What phase change occurs when a solid changes directly into a gas without turning liquid first?"
+        },
+        {
+            "word": "Deposition",
+            "clue": "What phase change occurs when a gas transforms directly into a solid?"
+        },
+        {
+            "word": "Floatability",
+            "clue": "What property describes an object’s tendency to float in water rather than sink?"
+        },
+        {
+            "word": "Pneumatophores",
+            "clue": "What specialized root adaptation allows mangroves to absorb air in muddy, waterlogged soil?"
+        },
+        {
+            "word": "Hermaphrodites",
+            "clue": "What term describes organisms like earthworms that possess both male and female reproductive organs?"
+        },
+        {
+            "word": "Osteoporosis",
+            "clue": "What disease causes bones to become weak and brittle, especially as bone density decreases?"
+        },
+        {
+            "word": "Homeostasis",
+            "clue": "What term describes the maintenance of stable internal conditions inside the human body?"
+        },
+        {
+            "word": "Epiglottis",
+            "clue": "What flap of tissue covers the trachea during swallowing to prevent food from entering the lungs?"
+        },
+        {
+            "word": "Gallbladder",
+            "clue": "What organ stores bile made by the liver until it is needed in the small intestine?"
+        },
+        {
+            "word": "Pancreas",
+            "clue": "What gland produces insulin to regulate sugar levels in the blood?"
+        },
+        {
+            "word": "Erythrocytes",
+            "clue": "What term names the red cells in blood that carry oxygen from the lungs to the body?"
+        },
+        {
+            "word": "Leukocytes",
+            "clue": "What term names the white blood cells that help defend the body against infections?"
+        },
+        {
+            "word": "Thrombocytes",
+            "clue": "What term names the tiny blood fragments that help form clots?"
+        },
+        {
+            "word": "Esophagus",
+            "clue": "What muscular pipe carries swallowed food from the throat down to the stomach?"
+        },
+        {
+            "word": "Malnutrition",
+            "clue": "What nutritional disorder results from an insufficient intake of essential nutrients and calories?"
+        },
+        {
+            "word": "Cellular respiration",
+            "clue": "What process releases stored energy from digested food inside cells using oxygen?"
+        },
+        {
+            "word": "Proboscis",
+            "clue": "What specialized mouth structure allows mosquitoes to pierce skin and suck blood?"
+        },
+        {
+            "word": "Exoskeleton",
+            "clue": "What protective hard outer shell protects invertebrates like crabs, beetles, and lobsters?"
+        },
+        {
+            "word": "Pollination",
+            "clue": "What process transfers pollen grains from the anther to the stigma of a flower?"
+        },
+        {
+            "word": "Fertilization",
+            "clue": "What process unites a male sperm cell with a female egg cell inside an ovule?"
+        },
+        {
+            "word": "Abiotic",
+            "clue": "What term describes non-living environmental factors in an ecosystem?"
+        },
+        {
+            "word": "Biotic",
+            "clue": "What term describes living environmental factors in an ecosystem?"
+        },
+        {
+            "word": "Mutualism",
+            "clue": "What interaction between two different species benefits both organisms?"
+        },
+        {
+            "word": "Commensalism",
+            "clue": "What interaction benefits one organism while leaving the other unaffected?"
+        },
+        {
+            "word": "Parasitism",
+            "clue": "What interaction involves one organism living on or inside a host and causing it harm?"
+        },
+        {
+            "word": "Desertification",
+            "clue": "What process turns fertile land into desert due to deforestation, drought, or poor agriculture?"
+        },
+        {
+            "word": "Biodegradability",
+            "clue": "What property describes a material’s ability to decay or break down naturally?"
+        },
+        {
+            "word": "Electromagnet",
+            "clue": "What temporary magnet is created by passing electric current through a wire coil around an iron core?"
+        },
+        {
+            "word": "Mechanical advantage",
+            "clue": "What measure describes how much a simple machine multiplies force?"
+        },
+        {
+            "word": "Penumbra",
+            "clue": "What shadow region experiences partial light blockage during an eclipse?"
+        },
+        {
+            "word": "anatomy",
+            "clue": "The study of the parts of a body."
+        },
+        {
+            "word": "cellular",
+            "clue": "Related to cells."
+        },
+        {
+            "word": "tissue",
+            "clue": "A group of similar cells working together."
+        },
+        {
+            "word": "organ",
+            "clue": "A body part that performs a special function."
+        },
+        {
+            "word": "senses",
+            "clue": "Abilities used to receive information from the surroundings."
+        },
+        {
+            "word": "stimulus",
+            "clue": "Something that causes a response in a living thing."
+        },
+        {
+            "word": "response",
+            "clue": "A reaction to something that happens."
+        },
+        {
+            "word": "reflex",
+            "clue": "A quick, automatic response to a stimulus."
+        },
+        {
+            "word": "sweat",
+            "clue": "Liquid produced by the skin to help cool the body."
+        },
+        {
+            "word": "saliva",
+            "clue": "Liquid in the mouth that helps begin digestion."
+        },
+        {
+            "word": "enzyme",
+            "clue": "A substance that helps chemical reactions happen in living things."
+        },
+        {
+            "word": "metabolism",
+            "clue": "The chemical processes that keep an organism alive."
+        },
+        {
+            "word": "heartbeat",
+            "clue": "The regular beating of the heart."
+        },
+        {
+            "word": "pulse",
+            "clue": "The rhythmic beating felt as blood moves through arteries."
+        },
+        {
+            "word": "artery",
+            "clue": "A blood vessel that carries blood away from the heart."
+        },
+        {
+            "word": "vein",
+            "clue": "A blood vessel that carries blood toward the heart."
+        },
+        {
+            "word": "capillary",
+            "clue": "A very tiny blood vessel."
+        },
+        {
+            "word": "immune",
+            "clue": "Protected against certain diseases or harmful organisms."
+        },
+        {
+            "word": "vaccine",
+            "clue": "A substance that helps the body develop protection against a disease."
+        },
+        {
+            "word": "pathogen",
+            "clue": "An organism or agent that can cause disease."
+        },
+        {
+            "word": "fungus",
+            "clue": "An organism such as a mushroom or mold."
+        },
+        {
+            "word": "mushroom",
+            "clue": "A type of fungus that usually grows above the ground."
+        },
+        {
+            "word": "parasite",
+            "clue": "An organism that lives on or in another organism and benefits from it."
+        },
+        {
+            "word": "host",
+            "clue": "An organism that provides food or shelter for another organism."
+        },
+        {
+            "word": "constellation",
+            "clue": "A group of stars forming a pattern in the sky."
+        },
+        {
+            "word": "astronomy",
+            "clue": "The study of stars, planets, and objects in space."
+        },
+        {
+            "word": "astronaut",
+            "clue": "A person trained to travel and work in space."
+        },
+        {
+            "word": "satellite",
+            "clue": "An object that moves around a planet or another object in space."
+        },
+        {
+            "word": "telescope",
+            "clue": "An instrument used to observe distant objects in space."
+        },
+        {
+            "word": "planetary",
+            "clue": "Related to planets."
+        },
+        {
+            "word": "universe",
+            "clue": "All of space, matter, energy, and everything within them."
+        },
+        {
+            "word": "galaxy",
+            "clue": "A huge group of stars, gas, and dust."
+        },
+        {
+            "word": "asteroid",
+            "clue": "A rocky object that travels around the Sun."
+        },
+        {
+            "word": "comet",
+            "clue": "An icy object that travels around the Sun and may develop a tail."
+        },
+        {
+            "word": "meteor",
+            "clue": "A space rock that produces a streak of light as it enters an atmosphere."
+        },
+        {
+            "word": "crater",
+            "clue": "A bowl-shaped hole formed on a surface by an impact or volcanic activity."
+        },
+        {
+            "word": "rotation",
+            "clue": "The spinning of an object around its axis."
+        },
+        {
+            "word": "revolution",
+            "clue": "The movement of one object around another."
+        },
+        {
+            "word": "orbit",
+            "clue": "The curved path of an object around another object in space."
+        },
+        {
+            "word": "eclipse",
+            "clue": "An event when one space object blocks light from another."
+        },
+        {
+            "word": "hemisphere",
+            "clue": "One half of a sphere or Earth."
+        },
+        {
+            "word": "equator",
+            "clue": "An imaginary line around the middle of Earth."
+        },
+        {
+            "word": "longitude",
+            "clue": "Lines used to measure position east or west on Earth."
+        },
+        {
+            "word": "latitude",
+            "clue": "Lines used to measure position north or south on Earth."
+        },
+        {
+            "word": "compass",
+            "clue": "An instrument used to find directions."
+        },
+        {
+            "word": "direction",
+            "clue": "The path toward a particular place."
+        },
+        {
+            "word": "magnetic field",
+            "clue": "The area around a magnet where magnetic force acts."
+        },
+        {
+            "word": "axis",
+            "clue": "An imaginary line around which an object rotates."
+        },
+        {
+            "word": "solstice",
+            "clue": "A time when the Sun reaches its northernmost or southernmost position relative to Earth."
+        },
+        {
+            "word": "crystallization",
+            "clue": "The process of forming crystals."
+        },
+        {
+            "word": "solubility",
+            "clue": "The ability of a substance to dissolve in another substance."
+        },
+        {
+            "word": "solution",
+            "clue": "A mixture formed when one substance dissolves in another."
+        },
+        {
+            "word": "solvent",
+            "clue": "A substance that dissolves another substance."
+        },
+        {
+            "word": "solute",
+            "clue": "A substance dissolved in a solvent."
+        },
+        {
+            "word": "mixture",
+            "clue": "Two or more substances combined without forming a new substance."
+        },
+        {
+            "word": "substance",
+            "clue": "A particular kind of matter."
+        },
+        {
+            "word": "density",
+            "clue": "How much matter is packed into a certain space."
+        },
+        {
+            "word": "volume",
+            "clue": "The amount of space an object occupies."
+        },
+        {
+            "word": "mass",
+            "clue": "The amount of matter in an object."
+        },
+        {
+            "word": "property",
+            "clue": "A characteristic that describes a substance or object."
+        },
+        {
+            "word": "physical",
+            "clue": "Related to the observable properties of matter."
+        },
+        {
+            "word": "chemical",
+            "clue": "Related to substances and the changes they can undergo."
+        },
+        {
+            "word": "reaction",
+            "clue": "A process in which substances change into different substances."
+        },
+        {
+            "word": "dissolution",
+            "clue": "The process in which a substance dissolves."
+        },
+        {
+            "word": "reversible",
+            "clue": "Able to be changed back to its original state."
+        },
+        {
+            "word": "irreversible",
+            "clue": "Not able to be changed back to its original state."
+        },
+        {
+            "word": "flexibility",
+            "clue": "The ability to bend without breaking."
+        },
+        {
+            "word": "elasticity",
+            "clue": "The ability to return to an original shape after being stretched."
+        },
+        {
+            "word": "conductivity",
+            "clue": "The ability of a material to allow heat or electricity to pass through it."
+        },
+        {
+            "word": "pressure",
+            "clue": "The force exerted on a surface."
+        },
+        {
+            "word": "thermodynamics",
+            "clue": "The study of heat, energy, and their relationships."
+        },
+        {
+            "word": "combustion",
+            "clue": "The process of burning something."
+        },
+        {
+            "word": "precipitate",
+            "clue": "A solid that forms from a solution during a chemical reaction."
+        },
+        {
+            "word": "neutralization",
+            "clue": "A reaction between an acid and a base."
+        },
+        {
+            "word": "acidity",
+            "clue": "The amount of acid in a substance."
+        },
+        {
+            "word": "alkaline",
+            "clue": "Having properties of a base rather than an acid."
+        },
+        {
+            "word": "corrosion",
+            "clue": "The gradual destruction of a material through chemical reactions."
+        },
+        {
+            "word": "oxidation",
+            "clue": "A chemical process involving oxygen or the loss of electrons."
+        },
+        {
+            "word": "photosphere",
+            "clue": "The visible surface of the Sun."
+        },
+        {
+            "word": "chromosphere",
+            "clue": "A layer of the Sun's atmosphere above the photosphere."
+        },
+        {
+            "word": "troposphere",
+            "clue": "The lowest layer of Earth's atmosphere."
+        },
+        {
+            "word": "stratosphere",
+            "clue": "The atmospheric layer above the troposphere."
+        },
+        {
+            "word": "ozonosphere",
+            "clue": "The region of the atmosphere containing much of the ozone layer."
+        },
+        {
+            "word": "hydrosphere",
+            "clue": "All of the water found on, under, and above Earth's surface."
+        },
+        {
+            "word": "lithosphere",
+            "clue": "Earth's rigid outer layer."
+        },
+        {
+            "word": "biosphere",
+            "clue": "The part of Earth where living things exist."
+        },
+        {
+            "word": "geosphere",
+            "clue": "The solid parts of Earth."
+        },
+        {
+            "word": "hydrology",
+            "clue": "The study of water and its movement on Earth."
+        },
+        {
+            "word": "geology",
+            "clue": "The study of Earth, rocks, and its history."
+        },
+        {
+            "word": "meteorology",
+            "clue": "The study of weather and the atmosphere."
+        },
+        {
+            "word": "seismology",
+            "clue": "The study of earthquakes and seismic waves."
+        },
+        {
+            "word": "volcanology",
+            "clue": "The study of volcanoes."
+        },
+        {
+            "word": "carbon dioxide",
+            "clue": "A gas released by animals when they breathe out and used by plants during photosynthesis."
+        },
+        {
+            "word": "oxygenation",
+            "clue": "The process of adding oxygen to something."
+        },
+        {
+            "word": "dehydration",
+            "clue": "A condition caused by not having enough water in the body."
+        },
+        {
+            "word": "electrification",
+            "clue": "The process of supplying something with electricity."
+        },
+        {
+            "word": "bioluminescence",
+            "clue": "Teacher-provided advanced science spelling term."
+        },
+        {
+            "word": "bacterium",
+            "clue": "Teacher-provided advanced science spelling term."
+        },
+        {
+            "word": "microbiology",
+            "clue": "Teacher-provided advanced science spelling term."
+        },
+        {
+            "word": "entomology",
+            "clue": "Teacher-provided advanced science spelling term."
+        },
+        {
+            "word": "ornithology",
+            "clue": "Teacher-provided advanced science spelling term."
+        },
+        {
+            "word": "herpetology",
+            "clue": "Teacher-provided advanced science spelling term."
+        },
+        {
+            "word": "botany",
+            "clue": "Teacher-provided advanced science spelling term."
+        },
+        {
+            "word": "zoology",
+            "clue": "Teacher-provided advanced science spelling term."
+        },
+        {
+            "word": "ecology",
+            "clue": "Teacher-provided advanced science spelling term."
+        },
+        {
+            "word": "physiology",
+            "clue": "Teacher-provided advanced science spelling term."
+        },
+        {
+            "word": "genetics",
+            "clue": "Teacher-provided advanced science spelling term."
+        },
+        {
+            "word": "heredity",
+            "clue": "Teacher-provided advanced science spelling term."
+        },
+        {
+            "word": "chromosome",
+            "clue": "Teacher-provided advanced science spelling term."
+        },
+        {
+            "word": "hereditary",
+            "clue": "Teacher-provided advanced science spelling term."
+        },
+        {
+            "word": "variation",
+            "clue": "Teacher-provided advanced science spelling term."
+        },
+        {
+            "word": "extremophile",
+            "clue": "Teacher-provided advanced science spelling term."
+        },
+        {
+            "word": "photosensitive",
+            "clue": "Teacher-provided advanced science spelling term."
+        },
+        {
+            "word": "bioluminescent",
+            "clue": "Teacher-provided advanced science spelling term."
+        },
+        {
+            "word": "thermoregulation",
+            "clue": "Teacher-provided advanced science spelling term."
+        },
+        {
+            "word": "electromagnetic",
+            "clue": "Teacher-provided advanced science spelling term."
+        },
+        {
+            "word": "🥇 HIGHEST-LEVEL WORDS FOR GRADE 3",
+            "clue": "Teacher-provided advanced science spelling term."
+        }
+    ]
+};
+
+// State Variables
+let currentSpellingWords = [];
+let currentIndex = 0;
+let userSpellingAnswers = [];
+let scores = { easy: 0, medium: 0, hard: 0 };
+let selectedVoiceName = ""; // Persist selected voice by name
+
+// Speech Synthesis Setup
+function populateVoiceList() {
+    if (!('speechSynthesis' in window)) return;
+
+    const voices = window.speechSynthesis.getVoices();
+    const voiceSelect = document.getElementById('voiceSelect');
+    
+    // Preserve current selection if possible
+    const currentVal = voiceSelect.value || selectedVoiceName;
+    voiceSelect.innerHTML = '';
+
+    if (voices.length === 0) {
+        voiceSelect.innerHTML = '<option value="">Default System Voice</option>';
+        return;
+    }
+
+    // Sort: Google voices & English voices first
+    voices.sort((a, b) => {
+        const aGoogle = a.name.includes('Google');
+        const bGoogle = b.name.includes('Google');
+        if (aGoogle && !bGoogle) return -1;
+        if (!aGoogle && bGoogle) return 1;
+
+        const aIsEng = a.lang.toLowerCase().startsWith('en');
+        const bIsEng = b.lang.toLowerCase().startsWith('en');
+        if (aIsEng && !bIsEng) return -1;
+        if (!aIsEng && bIsEng) return 1;
+        return a.name.localeCompare(b.name);
+    });
+
+    voices.forEach((voice) => {
+        const option = document.createElement('option');
+        const isGoogle = voice.name.includes('Google') ? '⭐ [Google] ' : '';
+        option.textContent = `${isGoogle}${voice.name} (${voice.lang})`;
+        option.value = voice.name; // Store unique voice name as value
+        voiceSelect.appendChild(option);
+    });
+
+    if (currentVal && Array.from(voiceSelect.options).some(o => o.value === currentVal)) {
+        voiceSelect.value = currentVal;
+    } else {
+        selectedVoiceName = voiceSelect.value;
+    }
+}
+
+populateVoiceList();
+if ('speechSynthesis' in window) {
+    window.speechSynthesis.onvoiceschanged = populateVoiceList;
+}
+
+// Track user voice selection explicitly
+document.getElementById('voiceSelect').addEventListener('change', function() {
+    selectedVoiceName = this.value;
+});
+
+function getSelectedVoice() {
+    if (!('speechSynthesis' in window)) return null;
+    const voices = window.speechSynthesis.getVoices();
+    const targetName = selectedVoiceName || document.getElementById('voiceSelect').value;
+    return voices.find(v => v.name === targetName) || null;
+}
+
+function speakClueAndWord() {
+    if (!('speechSynthesis' in window)) return;
+
+    window.speechSynthesis.cancel(); // Reset any active speech queue
+
+    const item = currentSpellingWords[currentIndex];
+    const selectedSpeed = parseFloat(document.getElementById('speedSelect').value);
+    const voice = getSelectedVoice();
+
+    // Utterance 1: Clue
+    const clueUtterance = new SpeechSynthesisUtterance(item.clue);
+    clueUtterance.rate = selectedSpeed;
+    if (voice) clueUtterance.voice = voice;
+
+    // Utterance 2: "Spell: [Word]" triggered upon clue finish
+    clueUtterance.onend = () => {
+        setTimeout(() => {
+            const targetUtterance = new SpeechSynthesisUtterance(`Spell: ${item.word}`);
+            targetUtterance.rate = selectedSpeed;
+            // Always re-query voice right before speaking to prevent browser voice resets
+            const freshVoice = getSelectedVoice();
+            if (freshVoice) targetUtterance.voice = freshVoice;
+            window.speechSynthesis.speak(targetUtterance);
+        }, 400);
+    };
+
+    window.speechSynthesis.speak(clueUtterance);
+}
+
+function speakWordOnly() {
+    if (!('speechSynthesis' in window)) return;
+
+    window.speechSynthesis.cancel();
+
+    const item = currentSpellingWords[currentIndex];
+    const selectedSpeed = parseFloat(document.getElementById('speedSelect').value);
+    const voice = getSelectedVoice();
+
+    const utterance = new SpeechSynthesisUtterance(`Spell: ${item.word}`);
+    utterance.rate = selectedSpeed;
+    if (voice) utterance.voice = voice;
+
+    window.speechSynthesis.speak(utterance);
+}
+
+function testSelectedVoice() {
+    if (!('speechSynthesis' in window)) return;
+
+    window.speechSynthesis.cancel();
+    const testUtterance = new SpeechSynthesisUtterance("Blood vessels that return deoxygenated blood back to the heart. Spell: VEINS.");
+    testUtterance.rate = parseFloat(document.getElementById('speedSelect').value);
+    const voice = getSelectedVoice();
+    if (voice) testUtterance.voice = voice;
+
+    window.speechSynthesis.speak(testUtterance);
+}
+
+// Utility Functions
+function shuffleArray(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+function getRandomWords(category, count) {
+    return shuffleArray(wordBank[category]).slice(0, count).map(w => ({ ...w, category }));
+}
+
+// Start Quiz Session
+function startSpellingBee() {
+    const easyWords = getRandomWords('easy', 15);
+    const mediumWords = getRandomWords('medium', 15);
+    const hardWords = getRandomWords('hard', 10);
+
+    currentSpellingWords = [...easyWords, ...mediumWords, ...hardWords];
+    currentIndex = 0;
+    userSpellingAnswers = [];
+    scores = { easy: 0, medium: 0, hard: 0 };
+
+    document.getElementById('startScreen').classList.add('hidden');
+    document.getElementById('resultsScreen').classList.add('hidden');
+    document.getElementById('quizScreen').classList.remove('hidden');
+
+    showWord();
+}
+
+// Render Current Word Question
+function showWord() {
+    const item = currentSpellingWords[currentIndex];
+
+    // Update Header Progress
+    document.getElementById('progressText').innerText = `Word ${currentIndex + 1} of 40`;
+    document.getElementById('progressBar').style.width = `${((currentIndex + 1) / 40) * 100}%`;
+
+    const badge = document.getElementById('roundBadge');
+    if (item.category === 'easy') {
+        badge.innerText = "Easy Round";
+        badge.className = "round-badge badge-easy";
+    } else if (item.category === 'medium') {
+        badge.innerText = "Medium Round";
+        badge.className = "round-badge badge-medium";
+    } else {
+        badge.innerText = "Hard Round";
+        badge.className = "round-badge badge-hard";
+    }
+
+    // Set Clue Text
+    document.getElementById('clueText').innerText = item.clue;
+
+    // Clear Input
+    const input = document.getElementById('spellingInput');
+    input.value = '';
+    input.focus();
+
+    // Trigger Speech based on settings
+    const readClue = document.getElementById('readClueCheckbox').checked;
+    setTimeout(() => {
+        if (readClue) {
+            speakClueAndWord();
+        } else {
+            speakWordOnly();
+        }
+    }, 300);
+}
+
+// Handle Submit
+function handleNext() {
+    const inputEl = document.getElementById('spellingInput');
+    const userTyped = inputEl.value.trim();
+    const target = currentSpellingWords[currentIndex];
+
+    const isCorrect = userTyped.toLowerCase() === target.word.toLowerCase();
+
+    if (isCorrect) {
+        scores[target.category]++;
+    }
+
+    userSpellingAnswers.push({
+        word: target.word,
+        clue: target.clue,
+        userTyped: userTyped || "(No Input)",
+        isCorrect: isCorrect,
+        category: target.category
+    });
+
+    currentIndex++;
+
+    if (currentIndex < currentSpellingWords.length) {
+        showWord();
+    } else {
+        showResults();
+    }
+}
+
+// Show Results Screen
+function showResults() {
+    window.speechSynthesis.cancel();
+    document.getElementById('quizScreen').classList.add('hidden');
+    document.getElementById('resultsScreen').classList.remove('hidden');
+
+    const totalCorrect = scores.easy + scores.medium + scores.hard;
+    const percentage = Math.round((totalCorrect / 40) * 100);
+
+    document.getElementById('finalScore').innerText = `${totalCorrect}/40`;
+    document.getElementById('finalPercent').innerText = `${percentage}%`;
+    document.getElementById('easyScore').innerText = `${scores.easy}/15`;
+    document.getElementById('mediumScore').innerText = `${scores.medium}/15`;
+    document.getElementById('hardScore').innerText = `${scores.hard}/10`;
+
+    const msg = document.getElementById('scoreMessage');
+    if (percentage >= 90) msg.innerText = "🏆 Spelling Bee Champion! Incredible accuracy!";
+    else if (percentage >= 75) msg.innerText = "🌟 Great Speller! Strong scientific vocabulary!";
+    else if (percentage >= 50) msg.innerText = "👍 Good effort! Review the tricky words below.";
+    else msg.innerText = "📚 Keep practicing! Practice makes perfect.";
+
+    // Render Review Section
+    const reviewContainer = document.getElementById('reviewContainer');
+    reviewContainer.innerHTML = '';
+
+    userSpellingAnswers.forEach((item, idx) => {
+        const div = document.createElement('div');
+        div.className = `review-item ${item.isCorrect ? 'correct' : 'incorrect'}`;
+        div.innerHTML = `
+            <div class="review-q">${idx + 1}. Correct Word: <strong>${item.word}</strong></div>
+            <div class="review-ans">
+                <strong>Meaning:</strong> ${item.clue}<br>
+                <strong>Your Spelling:</strong> ${item.userTyped} ${item.isCorrect ? '✅' : '❌'}
+            </div>
+        `;
+        reviewContainer.appendChild(div);
+    });
+}
+
+function returnToStart() {
+    window.speechSynthesis.cancel();
+    document.getElementById('resultsScreen').classList.add('hidden');
+    document.getElementById('startScreen').classList.remove('hidden');
+}
+
+function toggleTheme() {
+    const currentTheme = document.body.getAttribute('data-theme');
+    if (currentTheme === 'dark') {
+        document.body.removeAttribute('data-theme');
+    } else {
+        document.body.setAttribute('data-theme', 'dark');
+    }
+}
+
+// Enter key shortcut to submit
+document.getElementById('spellingInput').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        handleNext();
+    }
+});
+</script>
+
+</body>
+</html>
