@@ -535,1298 +535,1297 @@
 <script>
 // Word Database grouped by curated spelling difficulty. Difficulty is manually assigned; words are selected randomly within each group.
 const wordBank = {
-    "easy": [
-        {
-            "word": "Brain",
-            "clue": "Which organ serves as the command center of the human body?"
-        },
-        {
-            "word": "Femur",
-            "clue": "What is the longest and strongest bone in the human body?"
-        },
-        {
-            "word": "Heart",
-            "clue": "What internal organ pumps blood throughout the entire body?"
-        },
-        {
-            "word": "Kidneys",
-            "clue": "Which organs filter waste products and excess liquid from the blood?"
-        },
-        {
-            "word": "Liver",
-            "clue": "Which organ produces bile to help digest fats?"
-        },
-        {
-            "word": "Lungs",
-            "clue": "What is the main organ of the respiratory system used for gas exchange?"
-        },
-        {
-            "word": "Stomach",
-            "clue": "What muscular organ churns food and mixes it with acidic digestive juices?"
-        },
-        {
-            "word": "Skull",
-            "clue": "What skeletal organ protects the human brain from injury?"
-        },
-        {
-            "word": "Calcium",
-            "clue": "What mineral stored in bones makes them hard and strong?"
-        },
-        {
-            "word": "Roots",
-            "clue": "What plant structure absorbs water and minerals from the soil?"
-        },
-        {
-            "word": "Leaves",
-            "clue": "What plant structures contain tiny pores called stomata for gas exchange?"
-        },
-        {
-            "word": "Oxygen",
-            "clue": "What gas do plants release into the atmosphere during photosynthesis?"
-        },
-        {
-            "word": "Herbivores",
-            "clue": "What do you call animals that eat plants exclusively?"
-        },
-        {
-            "word": "Carnivores",
-            "clue": "What do you call animals that eat only other animals?"
-        },
-        {
-            "word": "Omnivores",
-            "clue": "What do you call organisms that eat both plants and animals?"
-        },
-        {
-            "word": "Reptiles",
-            "clue": "Which animal class includes cold-blooded vertebrates with dry, scaly skin?"
-        },
-        {
-            "word": "Amphibians",
-            "clue": "Which vertebrate class spends part of its life in water and part on land?"
-        },
-        {
-            "word": "Forest",
-            "clue": "What natural habitat is characterized by dense tree growth and abundant wildlife?"
-        },
-        {
-            "word": "Predator",
-            "clue": "What do you call an animal that hunts and feeds on other animals?"
-        },
-        {
-            "word": "Prey",
-            "clue": "What do you call an animal that is hunted and eaten by a predator?"
-        },
-        {
-            "word": "Gills",
-            "clue": "What body structures do fish use to extract dissolved oxygen from water?"
-        },
-        {
-            "word": "Fins",
-            "clue": "What structural adaptation helps fish balance and steer while swimming?"
-        },
-        {
-            "word": "Feathers",
-            "clue": "What adaptation helps birds fly efficiently, stay warm, and repel water?"
-        },
-        {
-            "word": "Matter",
-            "clue": "What is anything that occupies space and has mass called?"
-        },
-        {
-            "word": "Solid",
-            "clue": "What state of matter has a definite shape and a definite volume?"
-        },
-        {
-            "word": "Liquid",
-            "clue": "What state of matter has a definite volume but takes the shape of its container?"
-        },
-        {
-            "word": "Gas",
-            "clue": "What state of matter has neither a definite shape nor a definite volume?"
-        },
-        {
-            "word": "Melting",
-            "clue": "What physical change occurs when a solid turns into a liquid by absorbing heat?"
-        },
-        {
-            "word": "Freezing",
-            "clue": "What physical change occurs when a liquid turns into a solid by releasing heat?"
-        },
-        {
-            "word": "Force",
-            "clue": "What push or pull action on an object can change its speed, direction, or shape?"
-        },
-        {
-            "word": "Friction",
-            "clue": "What force resists the relative motion of two surfaces sliding against each other?"
-        },
-        {
-            "word": "Gravity",
-            "clue": "What invisible force pulls objects toward the center of the Earth?"
-        },
-        {
-            "word": "Magnetism",
-            "clue": "What attractive or repulsive force acts between magnetic poles?"
-        },
-        {
-            "word": "Lever",
-            "clue": "Which simple machine consists of a rigid bar pivoting on a fixed fulcrum?"
-        },
-        {
-            "word": "Pulley",
-            "clue": "What simple machine consists of a wheel with a grooved rim and a rope running through it?"
-        },
-        {
-            "word": "Wedge",
-            "clue": "What simple machine consists of two inclined planes placed back-to-back to split objects?"
-        },
-        {
-            "word": "Crust",
-            "clue": "What is the outermost solid layer of the Earth?"
-        },
-        {
-            "word": "Mantle",
-            "clue": "What thick layer of hot, semi-solid rock lies directly below Earth’s crust?"
-        },
-        {
-            "word": "Moon",
-            "clue": "What natural satellite orbits planet Earth?"
-        },
-        {
-            "word": "Mars",
-            "clue": "What planet is known as the Red Planet due to iron oxide on its surface?"
-        },
-        {
-            "word": "organism",
-            "clue": "Any living thing."
-        },
-        {
-            "word": "environment",
-            "clue": "Everything surrounding a living thing."
-        },
-        {
-            "word": "habitat",
-            "clue": "The natural home of an organism."
-        },
-        {
-            "word": "adaptation",
-            "clue": "A feature that helps an organism survive."
-        },
-        {
-            "word": "species",
-            "clue": "A group of similar organisms that can reproduce."
-        },
-        {
-            "word": "population",
-            "clue": "Organisms of the same species living in an area."
-        },
-        {
-            "word": "community",
-            "clue": "Different populations living together in an area."
-        },
-        {
-            "word": "ecosystem",
-            "clue": "Living and nonliving things interacting in an area."
-        },
-        {
-            "word": "biodiversity",
-            "clue": "The variety of living things in an area."
-        },
-        {
-            "word": "classification",
-            "clue": "Grouping organisms based on their characteristics."
-        },
-        {
-            "word": "vertebrate",
-            "clue": "An animal with a backbone."
-        },
-        {
-            "word": "invertebrate",
-            "clue": "An animal without a backbone."
-        },
-        {
-            "word": "amphibian",
-            "clue": "An animal that can live in water and on land."
-        },
-        {
-            "word": "reptile",
-            "clue": "A cold-blooded animal with scales."
-        },
-        {
-            "word": "mammal",
-            "clue": "An animal that feeds its young with milk."
-        },
-        {
-            "word": "offspring",
-            "clue": "The young or children of living things."
-        },
-        {
-            "word": "reproduction",
-            "clue": "The process of producing offspring."
-        },
-        {
-            "word": "nutrition",
-            "clue": "The process of getting nutrients from food."
-        },
-        {
-            "word": "respiration",
-            "clue": "A process cells use to release energy from food."
-        },
-        {
-            "word": "digestion",
-            "clue": "The process of breaking down food."
-        },
-        {
-            "word": "circulation",
-            "clue": "The movement of blood throughout the body."
-        },
-        {
-            "word": "skeleton",
-            "clue": "The framework of bones supporting the body."
-        },
-        {
-            "word": "muscular",
-            "clue": "Related to muscles."
-        },
-        {
-            "word": "digestive",
-            "clue": "Related to the process of breaking down food."
-        },
-        {
-            "word": "circulatory",
-            "clue": "Related to the movement of blood."
-        },
-        {
-            "word": "respiratory",
-            "clue": "Related to breathing."
-        },
-        {
-            "word": "excretory",
-            "clue": "Related to removing wastes from the body."
-        },
-        {
-            "word": "nervous",
-            "clue": "Related to the brain, spinal cord, and nerves."
-        },
-        {
-            "word": "microscope",
-            "clue": "An instrument used to see very small objects."
-        },
-        {
-            "word": "magnification",
-            "clue": "Making an object appear larger."
-        },
-        {
-            "word": "observation",
-            "clue": "Information obtained by carefully examining something."
-        },
-        {
-            "word": "investigation",
-            "clue": "A careful study to discover information."
-        },
-        {
-            "word": "hypothesis",
-            "clue": "A possible explanation that can be tested."
-        },
-        {
-            "word": "experiment",
-            "clue": "A scientific test used to answer a question."
-        },
-        {
-            "word": "measurement",
-            "clue": "The process of finding the size or amount of something."
-        },
-        {
-            "word": "precipitation",
-            "clue": "Water falling from clouds as rain, snow, sleet, or hail."
-        },
-        {
-            "word": "water cycle",
-            "clue": "The continuous movement of water through Earth and the atmosphere."
-        },
-        {
-            "word": "climate",
-            "clue": "The usual weather pattern of a place over a long time."
-        },
-        {
-            "word": "meteorologist",
-            "clue": "A scientist who studies weather."
-        },
-        {
-            "word": "forecast",
-            "clue": "A prediction about future weather."
-        }
-    ],
-    "medium": [
-        {
-            "word": "Ligaments",
-            "clue": "What structures connect bones to other bones at a joint?"
-        },
-        {
-            "word": "Tendons",
-            "clue": "What structures connect muscles to bones?"
-        },
-        {
-            "word": "Trachea",
-            "clue": "What windpipe connects the larynx to the lungs?"
-        },
-        {
-            "word": "Diaphragm",
-            "clue": "What dome-shaped muscle below the lungs contracts and relaxes during breathing?"
-        },
-        {
-            "word": "Nephrons",
-            "clue": "What tiny filtering units inside the kidneys remove waste from the blood?"
-        },
-        {
-            "word": "Alveoli",
-            "clue": "What tiny air sacs in the lungs are the site of oxygen and carbon dioxide exchange?"
-        },
-        {
-            "word": "Arteries",
-            "clue": "Which blood vessels carry oxygenated blood away from the heart?"
-        },
-        {
-            "word": "Veins",
-            "clue": "Which blood vessels return deoxygenated blood back to the heart?"
-        },
-        {
-            "word": "Capillaries",
-            "clue": "What are the smallest blood vessels where exchange of gases and nutrients occurs?"
-        },
-        {
-            "word": "Hepatitis",
-            "clue": "What illness is characterized by inflammation of the liver, often caused by a virus?"
-        },
-        {
-            "word": "Stethoscope",
-            "clue": "What medical device do doctors use to listen to heartbeats and lung sounds?"
-        },
-        {
-            "word": "Cartilage",
-            "clue": "What flexible tissue cushions the ends of bones at joints to prevent friction?"
-        },
-        {
-            "word": "Epidermis",
-            "clue": "What is the outer layer of human skin called?"
-        },
-        {
-            "word": "Melanin",
-            "clue": "What pigment in the skin gives it color and helps protect it from ultraviolet radiation?"
-        },
-        {
-            "word": "Photosynthesis",
-            "clue": "What process do plants use to create food using sunlight, water, and carbon dioxide?"
-        },
-        {
-            "word": "Chlorophyll",
-            "clue": "What green pigment in plant leaves absorbs sunlight for food production?"
-        },
-        {
-            "word": "Germination",
-            "clue": "What is the sprouting of a seed into a young plant called?"
-        },
-        {
-            "word": "Producers",
-            "clue": "What role do plants fill in a food chain because they manufacture their own food?"
-        },
-        {
-            "word": "Decomposers",
-            "clue": "What organisms break down dead plants and animals into nutrients?"
-        },
-        {
-            "word": "Xylem",
-            "clue": "What specialized tissue transports water from roots to the rest of the plant?"
-        },
-        {
-            "word": "Phloem",
-            "clue": "What specialized tissue carries food synthesized in leaves to all plant parts?"
-        },
-        {
-            "word": "Camouflage",
-            "clue": "What adaptation allows animals like chameleons to blend into their surroundings?"
-        },
-        {
-            "word": "Endotherms",
-            "clue": "What term describes animals that regulate their body temperature internally?"
-        },
-        {
-            "word": "Ectotherms",
-            "clue": "What term describes animals whose body temperature changes with the environment?"
-        },
-        {
-            "word": "Hibernation",
-            "clue": "What state of dormancy helps certain animals survive cold winters?"
-        },
-        {
-            "word": "Migration",
-            "clue": "What seasonal movement do animal populations make from one region to another?"
-        },
-        {
-            "word": "Cuticle",
-            "clue": "What specialized waxy layer covers leaves to prevent water evaporation?"
-        },
-        {
-            "word": "Evaporation",
-            "clue": "What physical process turns a liquid into a gas when heat is applied?"
-        },
-        {
-            "word": "Condensation",
-            "clue": "What process occurs when water vapor cools and transforms back into liquid water?"
-        },
-        {
-            "word": "Buoyancy",
-            "clue": "What force helps support an object in a fluid and opposes its weight?"
-        },
-        {
-            "word": "Temperature",
-            "clue": "What measure indicates the degree of hotness or coldness of a substance?"
-        },
-        {
-            "word": "Thermometer",
-            "clue": "What instrument is used to accurately measure temperature?"
-        },
-        {
-            "word": "Conduction",
-            "clue": "What heat transfer method occurs through direct physical contact within solids?"
-        },
-        {
-            "word": "Convection",
-            "clue": "What heat transfer method occurs through fluid movement in liquids and gases?"
-        },
-        {
-            "word": "Radiation",
-            "clue": "What heat transfer method travels through electromagnetic waves without requiring a physical medium?"
-        },
-        {
-            "word": "Refraction",
-            "clue": "What bending of light rays occurs as they pass from one transparent medium to another?"
-        },
-        {
-            "word": "Atmosphere",
-            "clue": "What envelope of gases surrounds the planet Earth?"
-        },
-        {
-            "word": "Humidity",
-            "clue": "What atmospheric parameter measures the amount of water vapor present in the air?"
-        },
-        {
-            "word": "Barometer",
-            "clue": "What weather instrument measures atmospheric pressure?"
-        },
-        {
-            "word": "Anemometer",
-            "clue": "What weather instrument measures wind speed?"
-        },
-        {
-            "word": "electricity",
-            "clue": "A form of energy caused by electric charges."
-        },
-        {
-            "word": "magnetic",
-            "clue": "Able to attract certain materials."
-        },
-        {
-            "word": "conductor",
-            "clue": "A material that allows heat or electricity to pass through easily."
-        },
-        {
-            "word": "insulator",
-            "clue": "A material that slows the movement of heat or electricity."
-        },
-        {
-            "word": "vibration",
-            "clue": "A rapid back-and-forth movement."
-        },
-        {
-            "word": "frequency",
-            "clue": "The number of vibrations or waves occurring in a certain time."
-        },
-        {
-            "word": "reflection",
-            "clue": "The bouncing back of light or sound."
-        },
-        {
-            "word": "transparent",
-            "clue": "Allowing light to pass through clearly."
-        },
-        {
-            "word": "translucent",
-            "clue": "Allowing some light to pass through."
-        },
-        {
-            "word": "opaque",
-            "clue": "Blocking light from passing through."
-        },
-        {
-            "word": "motion",
-            "clue": "A change in an object's position."
-        },
-        {
-            "word": "velocity",
-            "clue": "The speed and direction of an object's motion."
-        },
-        {
-            "word": "energy",
-            "clue": "The ability to cause change or do work."
-        },
-        {
-            "word": "potential",
-            "clue": "Stored energy an object has because of its position or condition."
-        },
-        {
-            "word": "kinetic",
-            "clue": "Relating to energy of motion."
-        },
-        {
-            "word": "mechanical",
-            "clue": "Related to machines or movement."
-        },
-        {
-            "word": "renewable",
-            "clue": "A resource that can naturally be replaced."
-        },
-        {
-            "word": "nonrenewable",
-            "clue": "A resource that cannot be quickly replaced."
-        },
-        {
-            "word": "resource",
-            "clue": "Something useful that people or organisms need."
-        },
-        {
-            "word": "conservation",
-            "clue": "Protection and careful use of natural resources."
-        },
-        {
-            "word": "sustainability",
-            "clue": "Using resources responsibly so they remain available in the future."
-        },
-        {
-            "word": "biodegradable",
-            "clue": "Able to break down naturally."
-        },
-        {
-            "word": "decomposition",
-            "clue": "The breakdown of dead organisms and materials."
-        },
-        {
-            "word": "decomposer",
-            "clue": "An organism that breaks down dead matter."
-        },
-        {
-            "word": "pollution",
-            "clue": "Harmful substances added to the environment."
-        },
-        {
-            "word": "contamination",
-            "clue": "Making something harmful or unclean by adding pollutants."
-        },
-        {
-            "word": "deforestation",
-            "clue": "The clearing or removal of forests."
-        },
-        {
-            "word": "reforestation",
-            "clue": "Planting trees again in areas where forests were removed."
-        },
-        {
-            "word": "erosion",
-            "clue": "The wearing away and movement of soil and rock."
-        },
-        {
-            "word": "weathering",
-            "clue": "The breaking down of rocks at Earth's surface."
-        },
-        {
-            "word": "sediment",
-            "clue": "Small pieces of rock, soil, or other material carried by water or wind."
-        },
-        {
-            "word": "earthquake",
-            "clue": "Shaking of Earth's surface caused by movement underground."
-        },
-        {
-            "word": "volcano",
-            "clue": "An opening where lava, ash, and gases may escape from Earth."
-        },
-        {
-            "word": "magnitude",
-            "clue": "A measure of the strength or size of an earthquake."
-        },
-        {
-            "word": "tectonic",
-            "clue": "Related to the large moving plates of Earth's crust."
-        },
-        {
-            "word": "mineral",
-            "clue": "A naturally occurring nonliving substance found in Earth."
-        },
-        {
-            "word": "fossil",
-            "clue": "Preserved remains or traces of ancient living things."
-        },
-        {
-            "word": "paleontologist",
-            "clue": "A scientist who studies fossils and ancient life."
-        },
-        {
-            "word": "metamorphosis",
-            "clue": "A major change in an animal's body during its life cycle."
-        },
-        {
-            "word": "herbivore",
-            "clue": "An animal that mainly eats plants."
-        },
-        {
-            "word": "carnivore",
-            "clue": "An animal that mainly eats other animals."
-        },
-        {
-            "word": "omnivore",
-            "clue": "An animal that eats both plants and animals."
-        },
-        {
-            "word": "food chain",
-            "clue": "A sequence showing how energy passes from one organism to another."
-        },
-        {
-            "word": "food web",
-            "clue": "A network of connected food chains."
-        },
-        {
-            "word": "producer",
-            "clue": "An organism, usually a plant, that makes its own food."
-        },
-        {
-            "word": "consumer",
-            "clue": "An organism that gets energy by eating other organisms."
-        },
-        {
-            "word": "energy transfer",
-            "clue": "The movement of energy from one organism or object to another."
-        },
-        {
-            "word": "symbiosis",
-            "clue": "A close relationship between two different organisms."
-        },
-        {
-            "word": "competition",
-            "clue": "A struggle between organisms for limited resources."
-        },
-        {
-            "word": "carbohydrate",
-            "clue": "A nutrient that provides energy for the body."
-        },
-        {
-            "word": "protein",
-            "clue": "A nutrient needed for growth and repair."
-        },
-        {
-            "word": "vitamin",
-            "clue": "A substance needed by the body to stay healthy."
-        },
-        {
-            "word": "microorganism",
-            "clue": "A living thing too small to see without a microscope."
-        },
-        {
-            "word": "bacteria",
-            "clue": "Tiny organisms found in many environments."
-        },
-        {
-            "word": "antibiotic",
-            "clue": "A medicine used to fight certain bacterial infections."
-        }
-    ],
-    "hard": [
-        {
-            "word": "Sublimation",
-            "clue": "What phase change occurs when a solid changes directly into a gas without turning liquid first?"
-        },
-        {
-            "word": "Deposition",
-            "clue": "What phase change occurs when a gas transforms directly into a solid?"
-        },
-        {
-            "word": "Floatability",
-            "clue": "What property describes an object’s tendency to float in water rather than sink?"
-        },
-        {
-            "word": "Pneumatophores",
-            "clue": "What specialized root adaptation allows mangroves to absorb air in muddy, waterlogged soil?"
-        },
-        {
-            "word": "Hermaphrodites",
-            "clue": "What term describes organisms like earthworms that possess both male and female reproductive organs?"
-        },
-        {
-            "word": "Osteoporosis",
-            "clue": "What disease causes bones to become weak and brittle, especially as bone density decreases?"
-        },
-        {
-            "word": "Homeostasis",
-            "clue": "What term describes the maintenance of stable internal conditions inside the human body?"
-        },
-        {
-            "word": "Epiglottis",
-            "clue": "What flap of tissue covers the trachea during swallowing to prevent food from entering the lungs?"
-        },
-        {
-            "word": "Gallbladder",
-            "clue": "What organ stores bile made by the liver until it is needed in the small intestine?"
-        },
-        {
-            "word": "Pancreas",
-            "clue": "What gland produces insulin to regulate sugar levels in the blood?"
-        },
-        {
-            "word": "Erythrocytes",
-            "clue": "What term names the red cells in blood that carry oxygen from the lungs to the body?"
-        },
-        {
-            "word": "Leukocytes",
-            "clue": "What term names the white blood cells that help defend the body against infections?"
-        },
-        {
-            "word": "Thrombocytes",
-            "clue": "What term names the tiny blood fragments that help form clots?"
-        },
-        {
-            "word": "Esophagus",
-            "clue": "What muscular pipe carries swallowed food from the throat down to the stomach?"
-        },
-        {
-            "word": "Malnutrition",
-            "clue": "What nutritional disorder results from an insufficient intake of essential nutrients and calories?"
-        },
-        {
-            "word": "Cellular respiration",
-            "clue": "What process releases stored energy from digested food inside cells using oxygen?"
-        },
-        {
-            "word": "Proboscis",
-            "clue": "What specialized mouth structure allows mosquitoes to pierce skin and suck blood?"
-        },
-        {
-            "word": "Exoskeleton",
-            "clue": "What protective hard outer shell protects invertebrates like crabs, beetles, and lobsters?"
-        },
-        {
-            "word": "Pollination",
-            "clue": "What process transfers pollen grains from the anther to the stigma of a flower?"
-        },
-        {
-            "word": "Fertilization",
-            "clue": "What process unites a male sperm cell with a female egg cell inside an ovule?"
-        },
-        {
-            "word": "Abiotic",
-            "clue": "What term describes non-living environmental factors in an ecosystem?"
-        },
-        {
-            "word": "Biotic",
-            "clue": "What term describes living environmental factors in an ecosystem?"
-        },
-        {
-            "word": "Mutualism",
-            "clue": "What interaction between two different species benefits both organisms?"
-        },
-        {
-            "word": "Commensalism",
-            "clue": "What interaction benefits one organism while leaving the other unaffected?"
-        },
-        {
-            "word": "Parasitism",
-            "clue": "What interaction involves one organism living on or inside a host and causing it harm?"
-        },
-        {
-            "word": "Desertification",
-            "clue": "What process turns fertile land into desert due to deforestation, drought, or poor agriculture?"
-        },
-        {
-            "word": "Biodegradability",
-            "clue": "What property describes a material’s ability to decay or break down naturally?"
-        },
-        {
-            "word": "Electromagnet",
-            "clue": "What temporary magnet is created by passing electric current through a wire coil around an iron core?"
-        },
-        {
-            "word": "Mechanical advantage",
-            "clue": "What measure describes how much a simple machine multiplies force?"
-        },
-        {
-            "word": "Penumbra",
-            "clue": "What shadow region experiences partial light blockage during an eclipse?"
-        },
-        {
-            "word": "anatomy",
-            "clue": "The study of the parts of a body."
-        },
-        {
-            "word": "cellular",
-            "clue": "Related to cells."
-        },
-        {
-            "word": "tissue",
-            "clue": "A group of similar cells working together."
-        },
-        {
-            "word": "organ",
-            "clue": "A body part that performs a special function."
-        },
-        {
-            "word": "senses",
-            "clue": "Abilities used to receive information from the surroundings."
-        },
-        {
-            "word": "stimulus",
-            "clue": "Something that causes a response in a living thing."
-        },
-        {
-            "word": "response",
-            "clue": "A reaction to something that happens."
-        },
-        {
-            "word": "reflex",
-            "clue": "A quick, automatic response to a stimulus."
-        },
-        {
-            "word": "sweat",
-            "clue": "Liquid produced by the skin to help cool the body."
-        },
-        {
-            "word": "saliva",
-            "clue": "Liquid in the mouth that helps begin digestion."
-        },
-        {
-            "word": "enzyme",
-            "clue": "A substance that helps chemical reactions happen in living things."
-        },
-        {
-            "word": "metabolism",
-            "clue": "The chemical processes that keep an organism alive."
-        },
-        {
-            "word": "heartbeat",
-            "clue": "The regular beating of the heart."
-        },
-        {
-            "word": "pulse",
-            "clue": "The rhythmic beating felt as blood moves through arteries."
-        },
-        {
-            "word": "artery",
-            "clue": "A blood vessel that carries blood away from the heart."
-        },
-        {
-            "word": "vein",
-            "clue": "A blood vessel that carries blood toward the heart."
-        },
-        {
-            "word": "capillary",
-            "clue": "A very tiny blood vessel."
-        },
-        {
-            "word": "immune",
-            "clue": "Protected against certain diseases or harmful organisms."
-        },
-        {
-            "word": "vaccine",
-            "clue": "A substance that helps the body develop protection against a disease."
-        },
-        {
-            "word": "pathogen",
-            "clue": "An organism or agent that can cause disease."
-        },
-        {
-            "word": "fungus",
-            "clue": "An organism such as a mushroom or mold."
-        },
-        {
-            "word": "mushroom",
-            "clue": "A type of fungus that usually grows above the ground."
-        },
-        {
-            "word": "parasite",
-            "clue": "An organism that lives on or in another organism and benefits from it."
-        },
-        {
-            "word": "host",
-            "clue": "An organism that provides food or shelter for another organism."
-        },
-        {
-            "word": "constellation",
-            "clue": "A group of stars forming a pattern in the sky."
-        },
-        {
-            "word": "astronomy",
-            "clue": "The study of stars, planets, and objects in space."
-        },
-        {
-            "word": "astronaut",
-            "clue": "A person trained to travel and work in space."
-        },
-        {
-            "word": "satellite",
-            "clue": "An object that moves around a planet or another object in space."
-        },
-        {
-            "word": "telescope",
-            "clue": "An instrument used to observe distant objects in space."
-        },
-        {
-            "word": "planetary",
-            "clue": "Related to planets."
-        },
-        {
-            "word": "universe",
-            "clue": "All of space, matter, energy, and everything within them."
-        },
-        {
-            "word": "galaxy",
-            "clue": "A huge group of stars, gas, and dust."
-        },
-        {
-            "word": "asteroid",
-            "clue": "A rocky object that travels around the Sun."
-        },
-        {
-            "word": "comet",
-            "clue": "An icy object that travels around the Sun and may develop a tail."
-        },
-        {
-            "word": "meteor",
-            "clue": "A space rock that produces a streak of light as it enters an atmosphere."
-        },
-        {
-            "word": "crater",
-            "clue": "A bowl-shaped hole formed on a surface by an impact or volcanic activity."
-        },
-        {
-            "word": "rotation",
-            "clue": "The spinning of an object around its axis."
-        },
-        {
-            "word": "revolution",
-            "clue": "The movement of one object around another."
-        },
-        {
-            "word": "orbit",
-            "clue": "The curved path of an object around another object in space."
-        },
-        {
-            "word": "eclipse",
-            "clue": "An event when one space object blocks light from another."
-        },
-        {
-            "word": "hemisphere",
-            "clue": "One half of a sphere or Earth."
-        },
-        {
-            "word": "equator",
-            "clue": "An imaginary line around the middle of Earth."
-        },
-        {
-            "word": "longitude",
-            "clue": "Lines used to measure position east or west on Earth."
-        },
-        {
-            "word": "latitude",
-            "clue": "Lines used to measure position north or south on Earth."
-        },
-        {
-            "word": "compass",
-            "clue": "An instrument used to find directions."
-        },
-        {
-            "word": "direction",
-            "clue": "The path toward a particular place."
-        },
-        {
-            "word": "magnetic field",
-            "clue": "The area around a magnet where magnetic force acts."
-        },
-        {
-            "word": "axis",
-            "clue": "An imaginary line around which an object rotates."
-        },
-        {
-            "word": "solstice",
-            "clue": "A time when the Sun reaches its northernmost or southernmost position relative to Earth."
-        },
-        {
-            "word": "crystallization",
-            "clue": "The process of forming crystals."
-        },
-        {
-            "word": "solubility",
-            "clue": "The ability of a substance to dissolve in another substance."
-        },
-        {
-            "word": "solution",
-            "clue": "A mixture formed when one substance dissolves in another."
-        },
-        {
-            "word": "solvent",
-            "clue": "A substance that dissolves another substance."
-        },
-        {
-            "word": "solute",
-            "clue": "A substance dissolved in a solvent."
-        },
-        {
-            "word": "mixture",
-            "clue": "Two or more substances combined without forming a new substance."
-        },
-        {
-            "word": "substance",
-            "clue": "A particular kind of matter."
-        },
-        {
-            "word": "density",
-            "clue": "How much matter is packed into a certain space."
-        },
-        {
-            "word": "volume",
-            "clue": "The amount of space an object occupies."
-        },
-        {
-            "word": "mass",
-            "clue": "The amount of matter in an object."
-        },
-        {
-            "word": "property",
-            "clue": "A characteristic that describes a substance or object."
-        },
-        {
-            "word": "physical",
-            "clue": "Related to the observable properties of matter."
-        },
-        {
-            "word": "chemical",
-            "clue": "Related to substances and the changes they can undergo."
-        },
-        {
-            "word": "reaction",
-            "clue": "A process in which substances change into different substances."
-        },
-        {
-            "word": "dissolution",
-            "clue": "The process in which a substance dissolves."
-        },
-        {
-            "word": "reversible",
-            "clue": "Able to be changed back to its original state."
-        },
-        {
-            "word": "irreversible",
-            "clue": "Not able to be changed back to its original state."
-        },
-        {
-            "word": "flexibility",
-            "clue": "The ability to bend without breaking."
-        },
-        {
-            "word": "elasticity",
-            "clue": "The ability to return to an original shape after being stretched."
-        },
-        {
-            "word": "conductivity",
-            "clue": "The ability of a material to allow heat or electricity to pass through it."
-        },
-        {
-            "word": "pressure",
-            "clue": "The force exerted on a surface."
-        },
-        {
-            "word": "thermodynamics",
-            "clue": "The study of heat, energy, and their relationships."
-        },
-        {
-            "word": "combustion",
-            "clue": "The process of burning something."
-        },
-        {
-            "word": "precipitate",
-            "clue": "A solid that forms from a solution during a chemical reaction."
-        },
-        {
-            "word": "neutralization",
-            "clue": "A reaction between an acid and a base."
-        },
-        {
-            "word": "acidity",
-            "clue": "The amount of acid in a substance."
-        },
-        {
-            "word": "alkaline",
-            "clue": "Having properties of a base rather than an acid."
-        },
-        {
-            "word": "corrosion",
-            "clue": "The gradual destruction of a material through chemical reactions."
-        },
-        {
-            "word": "oxidation",
-            "clue": "A chemical process involving oxygen or the loss of electrons."
-        },
-        {
-            "word": "photosphere",
-            "clue": "The visible surface of the Sun."
-        },
-        {
-            "word": "chromosphere",
-            "clue": "A layer of the Sun's atmosphere above the photosphere."
-        },
-        {
-            "word": "troposphere",
-            "clue": "The lowest layer of Earth's atmosphere."
-        },
-        {
-            "word": "stratosphere",
-            "clue": "The atmospheric layer above the troposphere."
-        },
-        {
-            "word": "ozonosphere",
-            "clue": "The region of the atmosphere containing much of the ozone layer."
-        },
-        {
-            "word": "hydrosphere",
-            "clue": "All of the water found on, under, and above Earth's surface."
-        },
-        {
-            "word": "lithosphere",
-            "clue": "Earth's rigid outer layer."
-        },
-        {
-            "word": "biosphere",
-            "clue": "The part of Earth where living things exist."
-        },
-        {
-            "word": "geosphere",
-            "clue": "The solid parts of Earth."
-        },
-        {
-            "word": "hydrology",
-            "clue": "The study of water and its movement on Earth."
-        },
-        {
-            "word": "geology",
-            "clue": "The study of Earth, rocks, and its history."
-        },
-        {
-            "word": "meteorology",
-            "clue": "The study of weather and the atmosphere."
-        },
-        {
-            "word": "seismology",
-            "clue": "The study of earthquakes and seismic waves."
-        },
-        {
-            "word": "volcanology",
-            "clue": "The study of volcanoes."
-        },
-        {
-            "word": "carbon dioxide",
-            "clue": "A gas released by animals when they breathe out and used by plants during photosynthesis."
-        },
-        {
-            "word": "oxygenation",
-            "clue": "The process of adding oxygen to something."
-        },
-        {
-            "word": "dehydration",
-            "clue": "A condition caused by not having enough water in the body."
-        },
-        {
-            "word": "electrification",
-            "clue": "The process of supplying something with electricity."
-        },
-        {
-            "word": "bioluminescence",
-            "clue": "What is the production of light by a living organism called?"
-        },
-        {
-            "word": "bacterium",
-            "clue": "What do we call a single bacterial organism?"
-        },
-        {
-            "word": "microbiology",
-            "clue": "What branch of science studies microorganisms?"
-        },
-        {
-            "word": "entomology",
-            "clue": "What branch of science studies insects?"
-        },
-        {
-            "word": "ornithology",
-            "clue": "What branch of science studies birds?"
-        },
-        {
-            "word": "herpetology",
-            "clue": "What branch of science studies reptiles and amphibians?"
-        },
-        {
-            "word": "botany",
-            "clue": "What branch of science studies plants?"
-        },
-        {
-            "word": "zoology",
-            "clue": "What branch of science studies animals?"
-        },
-        {
-            "word": "ecology",
-            "clue": "What branch of science studies the relationships between organisms and their environment?"
-        },
-        {
-            "word": "physiology",
-            "clue": "What branch of science studies how living organisms function?"
-        },
-        {
-            "word": "genetics",
-            "clue": "What branch of science studies heredity and inherited traits?"
-        },
-        {
-            "word": "heredity",
-            "clue": "What is the passing of traits from parents to offspring called?"
-        },
-        {
-            "word": "chromosome",
-            "clue": "What structure in a cell carries genetic information?"
-        },
-        {
-            "word": "hereditary",
-            "clue": "What word describes a trait passed from parents to offspring?"
-        },
-        {
-            "word": "variation",
-            "clue": "What term describes differences in traits among individuals of the same species?"
-        },
-        {
-            "word": "extremophile",
-            "clue": "What do we call an organism that can live in very harsh conditions?"
-        },
-        {
-            "word": "photosensitive",
-            "clue": "What word describes something that is sensitive to light?"
-        },
-        {
-            "word": "bioluminescent",
-            "clue": "What word describes an organism that produces light naturally?"
-        },
-        {
-            "word": "thermoregulation",
-            "clue": "What process helps an organism maintain a stable body temperature?"
-        },
-        {
-            "word": "electromagnetic",
-            "clue": "What term describes something related to both electricity and magnetism?"
-        }
-    ]
+  "easy": [
+    {
+      "word": "Brain",
+      "clue": "Which organ serves as the command center of the human body?"
+    },
+    {
+      "word": "Femur",
+      "clue": "What is the longest and strongest bone in the human body?"
+    },
+    {
+      "word": "Heart",
+      "clue": "What internal organ pumps blood throughout the entire body?"
+    },
+    {
+      "word": "Kidneys",
+      "clue": "Which organs filter waste products and excess liquid from the blood?"
+    },
+    {
+      "word": "Liver",
+      "clue": "Which organ produces bile to help digest fats?"
+    },
+    {
+      "word": "Lungs",
+      "clue": "What is the main organ of the respiratory system used for gas exchange?"
+    },
+    {
+      "word": "Stomach",
+      "clue": "What muscular organ churns food and mixes it with acidic digestive juices?"
+    },
+    {
+      "word": "Skull",
+      "clue": "What skeletal organ protects the human brain from injury?"
+    },
+    {
+      "word": "Calcium",
+      "clue": "What mineral stored in bones makes them hard and strong?"
+    },
+    {
+      "word": "Roots",
+      "clue": "What plant structure absorbs water and minerals from the soil?"
+    },
+    {
+      "word": "Leaves",
+      "clue": "What plant structures contain tiny pores called stomata for gas exchange?"
+    },
+    {
+      "word": "Oxygen",
+      "clue": "What gas do plants release into the atmosphere during photosynthesis?"
+    },
+    {
+      "word": "Herbivores",
+      "clue": "What do you call animals that eat plants exclusively?"
+    },
+    {
+      "word": "Carnivores",
+      "clue": "What do you call animals that eat only other animals?"
+    },
+    {
+      "word": "Omnivores",
+      "clue": "What do you call organisms that eat both plants and animals?"
+    },
+    {
+      "word": "Reptiles",
+      "clue": "Which animal class includes cold-blooded vertebrates with dry, scaly skin?"
+    },
+    {
+      "word": "Amphibians",
+      "clue": "Which vertebrate class spends part of its life in water and part on land?"
+    },
+    {
+      "word": "Forest",
+      "clue": "What natural habitat is characterized by dense tree growth and abundant wildlife?"
+    },
+    {
+      "word": "Predator",
+      "clue": "What do you call an animal that hunts and feeds on other animals?"
+    },
+    {
+      "word": "Prey",
+      "clue": "What do you call an animal that is hunted and eaten by a predator?"
+    },
+    {
+      "word": "Gills",
+      "clue": "What body structures do fish use to extract dissolved oxygen from water?"
+    },
+    {
+      "word": "Fins",
+      "clue": "What structural adaptation helps fish balance and steer while swimming?"
+    },
+    {
+      "word": "Feathers",
+      "clue": "What adaptation helps birds fly efficiently, stay warm, and repel water?"
+    },
+    {
+      "word": "Matter",
+      "clue": "What is anything that occupies space and has mass called?"
+    },
+    {
+      "word": "Solid",
+      "clue": "What state of matter has a definite shape and a definite volume?"
+    },
+    {
+      "word": "Liquid",
+      "clue": "What state of matter has a definite volume but takes the shape of its container?"
+    },
+    {
+      "word": "Gas",
+      "clue": "What state of matter has neither a definite shape nor a definite volume?"
+    },
+    {
+      "word": "Melting",
+      "clue": "What physical change occurs when a solid turns into a liquid by absorbing heat?"
+    },
+    {
+      "word": "Freezing",
+      "clue": "What physical change occurs when a liquid turns into a solid by releasing heat?"
+    },
+    {
+      "word": "Force",
+      "clue": "What push or pull action on an object can change its speed, direction, or shape?"
+    },
+    {
+      "word": "Friction",
+      "clue": "What force resists the relative motion of two surfaces sliding against each other?"
+    },
+    {
+      "word": "Gravity",
+      "clue": "What invisible force pulls objects toward the center of the Earth?"
+    },
+    {
+      "word": "Magnetism",
+      "clue": "What attractive or repulsive force acts between magnetic poles?"
+    },
+    {
+      "word": "Lever",
+      "clue": "Which simple machine consists of a rigid bar pivoting on a fixed fulcrum?"
+    },
+    {
+      "word": "Pulley",
+      "clue": "What simple machine consists of a wheel with a grooved rim and a rope running through it?"
+    },
+    {
+      "word": "Wedge",
+      "clue": "What simple machine consists of two inclined planes placed back-to-back to split objects?"
+    },
+    {
+      "word": "Crust",
+      "clue": "What is the outermost solid layer of the Earth?"
+    },
+    {
+      "word": "Mantle",
+      "clue": "What thick layer of hot, semi-solid rock lies directly below Earth’s crust?"
+    },
+    {
+      "word": "Moon",
+      "clue": "What natural satellite orbits planet Earth?"
+    },
+    {
+      "word": "Mars",
+      "clue": "What planet is known as the Red Planet due to iron oxide on its surface?"
+    },
+    {
+      "word": "organism",
+      "clue": "Any living thing."
+    },
+    {
+      "word": "environment",
+      "clue": "Everything surrounding a living thing."
+    },
+    {
+      "word": "habitat",
+      "clue": "The natural home of an organism."
+    },
+    {
+      "word": "adaptation",
+      "clue": "A feature that helps an organism survive."
+    },
+    {
+      "word": "species",
+      "clue": "A group of similar organisms that can reproduce."
+    },
+    {
+      "word": "population",
+      "clue": "Organisms of the same species living in an area."
+    },
+    {
+      "word": "community",
+      "clue": "Different populations living together in an area."
+    },
+    {
+      "word": "ecosystem",
+      "clue": "Living and nonliving things interacting in an area."
+    },
+    {
+      "word": "biodiversity",
+      "clue": "The variety of living things in an area."
+    },
+    {
+      "word": "classification",
+      "clue": "Grouping organisms based on their characteristics."
+    },
+    {
+      "word": "vertebrate",
+      "clue": "An animal with a backbone."
+    },
+    {
+      "word": "invertebrate",
+      "clue": "An animal without a backbone."
+    },
+    {
+      "word": "amphibian",
+      "clue": "An animal that can live in water and on land."
+    },
+    {
+      "word": "reptile",
+      "clue": "A cold-blooded animal with scales."
+    },
+    {
+      "word": "mammal",
+      "clue": "An animal that feeds its young with milk."
+    },
+    {
+      "word": "offspring",
+      "clue": "The young or children of living things."
+    },
+    {
+      "word": "reproduction",
+      "clue": "The process of producing offspring."
+    },
+    {
+      "word": "nutrition",
+      "clue": "The process of getting nutrients from food."
+    },
+    {
+      "word": "respiration",
+      "clue": "A process cells use to release energy from food."
+    },
+    {
+      "word": "digestion",
+      "clue": "The process of breaking down food."
+    },
+    {
+      "word": "circulation",
+      "clue": "The movement of blood throughout the body."
+    },
+    {
+      "word": "skeleton",
+      "clue": "The framework of bones supporting the body."
+    },
+    {
+      "word": "muscular",
+      "clue": "Related to muscles."
+    },
+    {
+      "word": "digestive",
+      "clue": "Related to the process of breaking down food."
+    },
+    {
+      "word": "circulatory",
+      "clue": "Related to the movement of blood."
+    },
+    {
+      "word": "respiratory",
+      "clue": "Related to breathing."
+    },
+    {
+      "word": "excretory",
+      "clue": "Related to removing wastes from the body."
+    },
+    {
+      "word": "nervous",
+      "clue": "Related to the brain, spinal cord, and nerves."
+    },
+    {
+      "word": "microscope",
+      "clue": "An instrument used to see very small objects."
+    },
+    {
+      "word": "magnification",
+      "clue": "Making an object appear larger."
+    },
+    {
+      "word": "observation",
+      "clue": "Information obtained by carefully examining something."
+    },
+    {
+      "word": "investigation",
+      "clue": "A careful study to discover information."
+    },
+    {
+      "word": "hypothesis",
+      "clue": "A possible explanation that can be tested."
+    },
+    {
+      "word": "experiment",
+      "clue": "A scientific test used to answer a question."
+    },
+    {
+      "word": "measurement",
+      "clue": "The process of finding the size or amount of something."
+    },
+    {
+      "word": "precipitation",
+      "clue": "Water falling from clouds as rain, snow, sleet, or hail."
+    },
+    {
+      "word": "water cycle",
+      "clue": "The continuous movement of water through Earth and the atmosphere."
+    },
+    {
+      "word": "climate",
+      "clue": "The usual weather pattern of a place over a long time."
+    },
+    {
+      "word": "meteorologist",
+      "clue": "A scientist who studies weather."
+    },
+    {
+      "word": "forecast",
+      "clue": "A prediction about future weather."
+    }
+  ],
+  "medium": [
+    {
+      "word": "Ligaments",
+      "clue": "What structures connect bones to other bones at a joint?"
+    },
+    {
+      "word": "Tendons",
+      "clue": "What structures connect muscles to bones?"
+    },
+    {
+      "word": "Trachea",
+      "clue": "What windpipe connects the larynx to the lungs?"
+    },
+    {
+      "word": "Diaphragm",
+      "clue": "What dome-shaped muscle below the lungs contracts and relaxes during breathing?"
+    },
+    {
+      "word": "Nephrons",
+      "clue": "What tiny filtering units inside the kidneys remove waste from the blood?"
+    },
+    {
+      "word": "Alveoli",
+      "clue": "What tiny air sacs in the lungs are the site of oxygen and carbon dioxide exchange?"
+    },
+    {
+      "word": "Arteries",
+      "clue": "Which blood vessels carry oxygenated blood away from the heart?"
+    },
+    {
+      "word": "Veins",
+      "clue": "Which blood vessels return deoxygenated blood back to the heart?"
+    },
+    {
+      "word": "Capillaries",
+      "clue": "What are the smallest blood vessels where exchange of gases and nutrients occurs?"
+    },
+    {
+      "word": "Hepatitis",
+      "clue": "What illness is characterized by inflammation of the liver, often caused by a virus?"
+    },
+    {
+      "word": "Stethoscope",
+      "clue": "What medical device do doctors use to listen to heartbeats and lung sounds?"
+    },
+    {
+      "word": "Cartilage",
+      "clue": "What flexible tissue cushions the ends of bones at joints to prevent friction?"
+    },
+    {
+      "word": "Epidermis",
+      "clue": "What is the outer layer of human skin called?"
+    },
+    {
+      "word": "Melanin",
+      "clue": "What pigment in the skin gives it color and helps protect it from ultraviolet radiation?"
+    },
+    {
+      "word": "Photosynthesis",
+      "clue": "What process do plants use to create food using sunlight, water, and carbon dioxide?"
+    },
+    {
+      "word": "Chlorophyll",
+      "clue": "What green pigment in plant leaves absorbs sunlight for food production?"
+    },
+    {
+      "word": "Germination",
+      "clue": "What is the sprouting of a seed into a young plant called?"
+    },
+    {
+      "word": "Producers",
+      "clue": "What role do plants fill in a food chain because they manufacture their own food?"
+    },
+    {
+      "word": "Decomposers",
+      "clue": "What organisms break down dead plants and animals into nutrients?"
+    },
+    {
+      "word": "Xylem",
+      "clue": "What specialized tissue transports water from roots to the rest of the plant?"
+    },
+    {
+      "word": "Phloem",
+      "clue": "What specialized tissue carries food synthesized in leaves to all plant parts?"
+    },
+    {
+      "word": "Camouflage",
+      "clue": "What adaptation allows animals like chameleons to blend into their surroundings?"
+    },
+    {
+      "word": "Endotherms",
+      "clue": "What term describes animals that regulate their body temperature internally?"
+    },
+    {
+      "word": "Ectotherms",
+      "clue": "What term describes animals whose body temperature changes with the environment?"
+    },
+    {
+      "word": "Hibernation",
+      "clue": "What state of dormancy helps certain animals survive cold winters?"
+    },
+    {
+      "word": "Migration",
+      "clue": "What seasonal movement do animal populations make from one region to another?"
+    },
+    {
+      "word": "Cuticle",
+      "clue": "What specialized waxy layer covers leaves to prevent water evaporation?"
+    },
+    {
+      "word": "Evaporation",
+      "clue": "What physical process turns a liquid into a gas when heat is applied?"
+    },
+    {
+      "word": "Condensation",
+      "clue": "What process occurs when water vapor cools and transforms back into liquid water?"
+    },
+    {
+      "word": "Buoyancy",
+      "clue": "What force helps support an object in a fluid and opposes its weight?"
+    },
+    {
+      "word": "Temperature",
+      "clue": "What measure indicates the degree of hotness or coldness of a substance?"
+    },
+    {
+      "word": "Thermometer",
+      "clue": "What instrument is used to accurately measure temperature?"
+    },
+    {
+      "word": "Conduction",
+      "clue": "What heat transfer method occurs through direct physical contact within solids?"
+    },
+    {
+      "word": "Convection",
+      "clue": "What heat transfer method occurs through fluid movement in liquids and gases?"
+    },
+    {
+      "word": "Radiation",
+      "clue": "What heat transfer method travels through electromagnetic waves without requiring a physical medium?"
+    },
+    {
+      "word": "Refraction",
+      "clue": "What bending of light rays occurs as they pass from one transparent medium to another?"
+    },
+    {
+      "word": "Atmosphere",
+      "clue": "What envelope of gases surrounds the planet Earth?"
+    },
+    {
+      "word": "Humidity",
+      "clue": "What atmospheric parameter measures the amount of water vapor present in the air?"
+    },
+    {
+      "word": "Barometer",
+      "clue": "What weather instrument measures atmospheric pressure?"
+    },
+    {
+      "word": "Anemometer",
+      "clue": "What weather instrument measures wind speed?"
+    },
+    {
+      "word": "electricity",
+      "clue": "A form of energy caused by electric charges."
+    },
+    {
+      "word": "magnetic",
+      "clue": "Able to attract certain materials."
+    },
+    {
+      "word": "conductor",
+      "clue": "A material that allows heat or electricity to pass through easily."
+    },
+    {
+      "word": "insulator",
+      "clue": "A material that slows the movement of heat or electricity."
+    },
+    {
+      "word": "vibration",
+      "clue": "A rapid back-and-forth movement."
+    },
+    {
+      "word": "frequency",
+      "clue": "The number of vibrations or waves occurring in a certain time."
+    },
+    {
+      "word": "reflection",
+      "clue": "The bouncing back of light or sound."
+    },
+    {
+      "word": "transparent",
+      "clue": "Allowing light to pass through clearly."
+    },
+    {
+      "word": "translucent",
+      "clue": "Allowing some light to pass through."
+    },
+    {
+      "word": "opaque",
+      "clue": "Blocking light from passing through."
+    },
+    {
+      "word": "motion",
+      "clue": "A change in an object's position."
+    },
+    {
+      "word": "velocity",
+      "clue": "The speed and direction of an object's motion."
+    },
+    {
+      "word": "energy",
+      "clue": "The ability to cause change or do work."
+    },
+    {
+      "word": "potential",
+      "clue": "Stored energy an object has because of its position or condition."
+    },
+    {
+      "word": "kinetic",
+      "clue": "Relating to energy of motion."
+    },
+    {
+      "word": "mechanical",
+      "clue": "Related to machines or movement."
+    },
+    {
+      "word": "renewable",
+      "clue": "A resource that can naturally be replaced."
+    },
+    {
+      "word": "nonrenewable",
+      "clue": "A resource that cannot be quickly replaced."
+    },
+    {
+      "word": "resource",
+      "clue": "Something useful that people or organisms need."
+    },
+    {
+      "word": "conservation",
+      "clue": "Protection and careful use of natural resources."
+    },
+    {
+      "word": "sustainability",
+      "clue": "Using resources responsibly so they remain available in the future."
+    },
+    {
+      "word": "biodegradable",
+      "clue": "Able to break down naturally."
+    },
+    {
+      "word": "decomposition",
+      "clue": "The breakdown of dead organisms and materials."
+    },
+    {
+      "word": "decomposer",
+      "clue": "An organism that breaks down dead matter."
+    },
+    {
+      "word": "pollution",
+      "clue": "Harmful substances added to the environment."
+    },
+    {
+      "word": "contamination",
+      "clue": "Making something harmful or unclean by adding pollutants."
+    },
+    {
+      "word": "deforestation",
+      "clue": "The clearing or removal of forests."
+    },
+    {
+      "word": "reforestation",
+      "clue": "Planting trees again in areas where forests were removed."
+    },
+    {
+      "word": "erosion",
+      "clue": "The wearing away and movement of soil and rock."
+    },
+    {
+      "word": "weathering",
+      "clue": "The breaking down of rocks at Earth's surface."
+    },
+    {
+      "word": "sediment",
+      "clue": "Small pieces of rock, soil, or other material carried by water or wind."
+    },
+    {
+      "word": "earthquake",
+      "clue": "Shaking of Earth's surface caused by movement underground."
+    },
+    {
+      "word": "volcano",
+      "clue": "An opening where lava, ash, and gases may escape from Earth."
+    },
+    {
+      "word": "magnitude",
+      "clue": "A measure of the strength or size of an earthquake."
+    },
+    {
+      "word": "tectonic",
+      "clue": "Related to the large moving plates of Earth's crust."
+    },
+    {
+      "word": "mineral",
+      "clue": "A naturally occurring nonliving substance found in Earth."
+    },
+    {
+      "word": "fossil",
+      "clue": "Preserved remains or traces of ancient living things."
+    },
+    {
+      "word": "paleontologist",
+      "clue": "A scientist who studies fossils and ancient life."
+    },
+    {
+      "word": "metamorphosis",
+      "clue": "A major change in an animal's body during its life cycle."
+    },
+    {
+      "word": "herbivore",
+      "clue": "An animal that mainly eats plants."
+    },
+    {
+      "word": "carnivore",
+      "clue": "An animal that mainly eats other animals."
+    },
+    {
+      "word": "omnivore",
+      "clue": "An animal that eats both plants and animals."
+    },
+    {
+      "word": "food chain",
+      "clue": "A sequence showing how energy passes from one organism to another."
+    },
+    {
+      "word": "food web",
+      "clue": "A network of connected food chains."
+    },
+    {
+      "word": "producer",
+      "clue": "An organism, usually a plant, that makes its own food."
+    },
+    {
+      "word": "consumer",
+      "clue": "An organism that gets energy by eating other organisms."
+    },
+    {
+      "word": "energy transfer",
+      "clue": "The movement of energy from one organism or object to another."
+    },
+    {
+      "word": "symbiosis",
+      "clue": "A close relationship between two different organisms."
+    },
+    {
+      "word": "competition",
+      "clue": "A struggle between organisms for limited resources."
+    },
+    {
+      "word": "carbohydrate",
+      "clue": "A nutrient that provides energy for the body."
+    },
+    {
+      "word": "protein",
+      "clue": "A nutrient needed for growth and repair."
+    },
+    {
+      "word": "vitamin",
+      "clue": "A substance needed by the body to stay healthy."
+    },
+    {
+      "word": "microorganism",
+      "clue": "A living thing too small to see without a microscope."
+    },
+    {
+      "word": "bacteria",
+      "clue": "Tiny organisms found in many environments."
+    },
+    {
+      "word": "antibiotic",
+      "clue": "A medicine used to fight certain bacterial infections."
+    }
+  ],
+  "hard": [
+    {
+      "word": "Sublimation",
+      "clue": "What phase change occurs when a solid changes directly into a gas without turning liquid first?"
+    },
+    {
+      "word": "Deposition",
+      "clue": "What phase change occurs when a gas transforms directly into a solid?"
+    },
+    {
+      "word": "Floatability",
+      "clue": "What property describes an object’s tendency to float in water rather than sink?"
+    },
+    {
+      "word": "Pneumatophores",
+      "clue": "What specialized root adaptation allows mangroves to absorb air in muddy, waterlogged soil?"
+    },
+    {
+      "word": "Hermaphrodites",
+      "clue": "What term describes organisms like earthworms that possess both male and female reproductive organs?"
+    },
+    {
+      "word": "Osteoporosis",
+      "clue": "What disease causes bones to become weak and brittle, especially as bone density decreases?"
+    },
+    {
+      "word": "Homeostasis",
+      "clue": "What term describes the maintenance of stable internal conditions inside the human body?"
+    },
+    {
+      "word": "Epiglottis",
+      "clue": "What flap of tissue covers the trachea during swallowing to prevent food from entering the lungs?"
+    },
+    {
+      "word": "Gallbladder",
+      "clue": "What organ stores bile made by the liver until it is needed in the small intestine?"
+    },
+    {
+      "word": "Pancreas",
+      "clue": "What gland produces insulin to regulate sugar levels in the blood?"
+    },
+    {
+      "word": "Erythrocytes",
+      "clue": "What term names the red cells in blood that carry oxygen from the lungs to the body?"
+    },
+    {
+      "word": "Leukocytes",
+      "clue": "What term names the white blood cells that help defend the body against infections?"
+    },
+    {
+      "word": "Thrombocytes",
+      "clue": "What term names the tiny blood fragments that help form clots?"
+    },
+    {
+      "word": "Esophagus",
+      "clue": "What muscular pipe carries swallowed food from the throat down to the stomach?"
+    },
+    {
+      "word": "Malnutrition",
+      "clue": "What nutritional disorder results from an insufficient intake of essential nutrients and calories?"
+    },
+    {
+      "word": "Cellular respiration",
+      "clue": "What process releases stored energy from digested food inside cells using oxygen?"
+    },
+    {
+      "word": "Proboscis",
+      "clue": "What specialized mouth structure allows mosquitoes to pierce skin and suck blood?"
+    },
+    {
+      "word": "Exoskeleton",
+      "clue": "What protective hard outer shell protects invertebrates like crabs, beetles, and lobsters?"
+    },
+    {
+      "word": "Pollination",
+      "clue": "What process transfers pollen grains from the anther to the stigma of a flower?"
+    },
+    {
+      "word": "Fertilization",
+      "clue": "What process unites a male sperm cell with a female egg cell inside an ovule?"
+    },
+    {
+      "word": "Abiotic",
+      "clue": "What term describes non-living environmental factors in an ecosystem?"
+    },
+    {
+      "word": "Biotic",
+      "clue": "What term describes living environmental factors in an ecosystem?"
+    },
+    {
+      "word": "Mutualism",
+      "clue": "What interaction between two different species benefits both organisms?"
+    },
+    {
+      "word": "Commensalism",
+      "clue": "What interaction benefits one organism while leaving the other unaffected?"
+    },
+    {
+      "word": "Parasitism",
+      "clue": "What interaction involves one organism living on or inside a host and causing it harm?"
+    },
+    {
+      "word": "Desertification",
+      "clue": "What process turns fertile land into desert due to deforestation, drought, or poor agriculture?"
+    },
+    {
+      "word": "Biodegradability",
+      "clue": "What property describes a material’s ability to decay or break down naturally?"
+    },
+    {
+      "word": "Electromagnet",
+      "clue": "What temporary magnet is created by passing electric current through a wire coil around an iron core?"
+    },
+    {
+      "word": "Mechanical advantage",
+      "clue": "What measure describes how much a simple machine multiplies force?"
+    },
+    {
+      "word": "Penumbra",
+      "clue": "What shadow region experiences partial light blockage during an eclipse?"
+    },
+    {
+      "word": "anatomy",
+      "clue": "The study of the parts of a body."
+    },
+    {
+      "word": "cellular",
+      "clue": "Related to cells."
+    },
+    {
+      "word": "tissue",
+      "clue": "A group of similar cells working together."
+    },
+    {
+      "word": "organ",
+      "clue": "A body part that performs a special function."
+    },
+    {
+      "word": "senses",
+      "clue": "Abilities used to receive information from the surroundings."
+    },
+    {
+      "word": "stimulus",
+      "clue": "Something that causes a response in a living thing."
+    },
+    {
+      "word": "response",
+      "clue": "A reaction to something that happens."
+    },
+    {
+      "word": "reflex",
+      "clue": "A quick, automatic response to a stimulus."
+    },
+    {
+      "word": "sweat",
+      "clue": "Liquid produced by the skin to help cool the body."
+    },
+    {
+      "word": "saliva",
+      "clue": "Liquid in the mouth that helps begin digestion."
+    },
+    {
+      "word": "enzyme",
+      "clue": "A substance that helps chemical reactions happen in living things."
+    },
+    {
+      "word": "metabolism",
+      "clue": "The chemical processes that keep an organism alive."
+    },
+    {
+      "word": "heartbeat",
+      "clue": "The regular beating of the heart."
+    },
+    {
+      "word": "pulse",
+      "clue": "The rhythmic beating felt as blood moves through arteries."
+    },
+    {
+      "word": "artery",
+      "clue": "A blood vessel that carries blood away from the heart."
+    },
+    {
+      "word": "vein",
+      "clue": "A blood vessel that carries blood toward the heart."
+    },
+    {
+      "word": "capillary",
+      "clue": "A very tiny blood vessel."
+    },
+    {
+      "word": "immune",
+      "clue": "Protected against certain diseases or harmful organisms."
+    },
+    {
+      "word": "vaccine",
+      "clue": "A substance that helps the body develop protection against a disease."
+    },
+    {
+      "word": "pathogen",
+      "clue": "An organism or agent that can cause disease."
+    },
+    {
+      "word": "fungus",
+      "clue": "An organism such as a mushroom or mold."
+    },
+    {
+      "word": "mushroom",
+      "clue": "A type of fungus that usually grows above the ground."
+    },
+    {
+      "word": "parasite",
+      "clue": "An organism that lives on or in another organism and benefits from it."
+    },
+    {
+      "word": "host",
+      "clue": "An organism that provides food or shelter for another organism."
+    },
+    {
+      "word": "constellation",
+      "clue": "A group of stars forming a pattern in the sky."
+    },
+    {
+      "word": "astronomy",
+      "clue": "The study of stars, planets, and objects in space."
+    },
+    {
+      "word": "astronaut",
+      "clue": "A person trained to travel and work in space."
+    },
+    {
+      "word": "satellite",
+      "clue": "An object that moves around a planet or another object in space."
+    },
+    {
+      "word": "telescope",
+      "clue": "An instrument used to observe distant objects in space."
+    },
+    {
+      "word": "planetary",
+      "clue": "Related to planets."
+    },
+    {
+      "word": "universe",
+      "clue": "All of space, matter, energy, and everything within them."
+    },
+    {
+      "word": "galaxy",
+      "clue": "A huge group of stars, gas, and dust."
+    },
+    {
+      "word": "asteroid",
+      "clue": "A rocky object that travels around the Sun."
+    },
+    {
+      "word": "comet",
+      "clue": "An icy object that travels around the Sun and may develop a tail."
+    },
+    {
+      "word": "meteor",
+      "clue": "A space rock that produces a streak of light as it enters an atmosphere."
+    },
+    {
+      "word": "crater",
+      "clue": "A bowl-shaped hole formed on a surface by an impact or volcanic activity."
+    },
+    {
+      "word": "rotation",
+      "clue": "The spinning of an object around its axis."
+    },
+    {
+      "word": "revolution",
+      "clue": "The movement of one object around another."
+    },
+    {
+      "word": "orbit",
+      "clue": "The curved path of an object around another object in space."
+    },
+    {
+      "word": "eclipse",
+      "clue": "An event when one space object blocks light from another."
+    },
+    {
+      "word": "hemisphere",
+      "clue": "One half of a sphere or Earth."
+    },
+    {
+      "word": "equator",
+      "clue": "An imaginary line around the middle of Earth."
+    },
+    {
+      "word": "longitude",
+      "clue": "Lines used to measure position east or west on Earth."
+    },
+    {
+      "word": "latitude",
+      "clue": "Lines used to measure position north or south on Earth."
+    },
+    {
+      "word": "compass",
+      "clue": "An instrument used to find directions."
+    },
+    {
+      "word": "direction",
+      "clue": "The path toward a particular place."
+    },
+    {
+      "word": "magnetic field",
+      "clue": "The area around a magnet where magnetic force acts."
+    },
+    {
+      "word": "axis",
+      "clue": "An imaginary line around which an object rotates."
+    },
+    {
+      "word": "solstice",
+      "clue": "A time when the Sun reaches its northernmost or southernmost position relative to Earth."
+    },
+    {
+      "word": "crystallization",
+      "clue": "The process of forming crystals."
+    },
+    {
+      "word": "solubility",
+      "clue": "The ability of a substance to dissolve in another substance."
+    },
+    {
+      "word": "solution",
+      "clue": "A mixture formed when one substance dissolves in another."
+    },
+    {
+      "word": "solvent",
+      "clue": "A substance that dissolves another substance."
+    },
+    {
+      "word": "solute",
+      "clue": "A substance dissolved in a solvent."
+    },
+    {
+      "word": "mixture",
+      "clue": "Two or more substances combined without forming a new substance."
+    },
+    {
+      "word": "substance",
+      "clue": "A particular kind of matter."
+    },
+    {
+      "word": "density",
+      "clue": "How much matter is packed into a certain space."
+    },
+    {
+      "word": "volume",
+      "clue": "The amount of space an object occupies."
+    },
+    {
+      "word": "mass",
+      "clue": "The amount of matter in an object."
+    },
+    {
+      "word": "property",
+      "clue": "A characteristic that describes a substance or object."
+    },
+    {
+      "word": "physical",
+      "clue": "Related to the observable properties of matter."
+    },
+    {
+      "word": "chemical",
+      "clue": "Related to substances and the changes they can undergo."
+    },
+    {
+      "word": "reaction",
+      "clue": "A process in which substances change into different substances."
+    },
+    {
+      "word": "dissolution",
+      "clue": "The process in which a substance dissolves."
+    },
+    {
+      "word": "reversible",
+      "clue": "Able to be changed back to its original state."
+    },
+    {
+      "word": "irreversible",
+      "clue": "Not able to be changed back to its original state."
+    },
+    {
+      "word": "flexibility",
+      "clue": "The ability to bend without breaking."
+    },
+    {
+      "word": "elasticity",
+      "clue": "The ability to return to an original shape after being stretched."
+    },
+    {
+      "word": "conductivity",
+      "clue": "The ability of a material to allow heat or electricity to pass through it."
+    },
+    {
+      "word": "pressure",
+      "clue": "The force exerted on a surface."
+    },
+    {
+      "word": "thermodynamics",
+      "clue": "The study of heat, energy, and their relationships."
+    },
+    {
+      "word": "combustion",
+      "clue": "The process of burning something."
+    },
+    {
+      "word": "precipitate",
+      "clue": "A solid that forms from a solution during a chemical reaction."
+    },
+    {
+      "word": "neutralization",
+      "clue": "A reaction between an acid and a base."
+    },
+    {
+      "word": "acidity",
+      "clue": "The amount of acid in a substance."
+    },
+    {
+      "word": "alkaline",
+      "clue": "Having properties of a base rather than an acid."
+    },
+    {
+      "word": "corrosion",
+      "clue": "The gradual destruction of a material through chemical reactions."
+    },
+    {
+      "word": "oxidation",
+      "clue": "A chemical process involving oxygen or the loss of electrons."
+    },
+    {
+      "word": "photosphere",
+      "clue": "The visible surface of the Sun."
+    },
+    {
+      "word": "chromosphere",
+      "clue": "A layer of the Sun's atmosphere above the photosphere."
+    },
+    {
+      "word": "troposphere",
+      "clue": "The lowest layer of Earth's atmosphere."
+    },
+    {
+      "word": "stratosphere",
+      "clue": "The atmospheric layer above the troposphere."
+    },
+    {
+      "word": "ozonosphere",
+      "clue": "The region of the atmosphere containing much of the ozone layer."
+    },
+    {
+      "word": "hydrosphere",
+      "clue": "All of the water found on, under, and above Earth's surface."
+    },
+    {
+      "word": "lithosphere",
+      "clue": "Earth's rigid outer layer."
+    },
+    {
+      "word": "biosphere",
+      "clue": "The part of Earth where living things exist."
+    },
+    {
+      "word": "geosphere",
+      "clue": "The solid parts of Earth."
+    },
+    {
+      "word": "hydrology",
+      "clue": "The study of water and its movement on Earth."
+    },
+    {
+      "word": "geology",
+      "clue": "The study of Earth, rocks, and its history."
+    },
+    {
+      "word": "meteorology",
+      "clue": "The study of weather and the atmosphere."
+    },
+    {
+      "word": "seismology",
+      "clue": "The study of earthquakes and seismic waves."
+    },
+    {
+      "word": "volcanology",
+      "clue": "The study of volcanoes."
+    },
+    {
+      "word": "carbon dioxide",
+      "clue": "A gas released by animals when they breathe out and used by plants during photosynthesis."
+    },
+    {
+      "word": "oxygenation",
+      "clue": "The process of adding oxygen to something."
+    },
+    {
+      "word": "dehydration",
+      "clue": "A condition caused by not having enough water in the body."
+    },
+    {
+      "word": "electrification",
+      "clue": "The process of supplying something with electricity."
+    },
+    {
+      "word": "bioluminescence",
+      "clue": "The ability of a living thing to produce its own light, such as some fireflies and deep-sea animals."
+    },
+    {
+      "word": "bacterium",
+      "clue": "A single microscopic living organism that is too small to see without a microscope."
+    },
+    {
+      "word": "microbiology",
+      "clue": "The study of very small living things, such as bacteria and other microorganisms."
+    },
+    {
+      "word": "entomology",
+      "clue": "The study of insects."
+    },
+    {
+      "word": "ornithology",
+      "clue": "The study of birds."
+    },
+    {
+      "word": "herpetology",
+      "clue": "The study of reptiles and amphibians."
+    },
+    {
+      "word": "botany",
+      "clue": "The study of plants."
+    },
+    {
+      "word": "zoology",
+      "clue": "The study of animals."
+    },
+    {
+      "word": "ecology",
+      "clue": "The study of how living things interact with one another and with their environment."
+    },
+    {
+      "word": "physiology",
+      "clue": "The study of how the parts of living things work."
+    },
+    {
+      "word": "genetics",
+      "clue": "The study of how traits are passed from parents to their offspring."
+    },
+    {
+      "word": "heredity",
+      "clue": "The passing of traits from parents to their offspring."
+    },
+    {
+      "word": "chromosome",
+      "clue": "A structure inside a cell that carries genetic information."
+    },
+    {
+      "word": "hereditary",
+      "clue": "A trait or condition that can be passed from parents to their offspring."
+    },
+    {
+      "word": "variation",
+      "clue": "A difference in traits among members of the same kind of living thing."
+    },
+    {
+      "word": "extremophile",
+      "clue": "A living thing that can survive in very harsh environments, such as places that are extremely hot or salty."
+    },
+    {
+      "word": "photosensitive",
+      "clue": "Sensitive to light or affected by light."
+    },
+    {
+      "word": "bioluminescent",
+      "clue": "Describes a living thing that can produce its own light."
+    },
+    {
+      "word": "thermoregulation",
+      "clue": "The way a living thing keeps its body temperature within a suitable range."
+    },
+    {
+      "word": "electromagnetic",
+      "clue": "Related to both electricity and magnetism, which are closely connected forms of energy."
+    }
+  ]
 };
-
 // State Variables
 let currentSpellingWords = [];
 let currentIndex = 0;
@@ -1964,7 +1963,42 @@ function shuffleArray(array) {
 }
 
 function getRandomWords(category, count) {
-    return shuffleArray(wordBank[category]).slice(0, count).map(w => ({ ...w, category }));
+    const coverageKey = 'bcopsSpellingCoverage_v4_' + category;
+    let deck = [];
+
+    try {
+        deck = JSON.parse(localStorage.getItem(coverageKey) || '[]');
+    } catch (e) {
+        deck = [];
+    }
+
+    const maxIndex = wordBank[category].length - 1;
+
+    // Clean old/corrupt decks and remove duplicate indexes.
+    deck = [...new Set(
+        deck.filter(i => Number.isInteger(i) && i >= 0 && i <= maxIndex)
+    )];
+
+    // Add unseen words to the deck. A word is not repeated until the
+    // current category pool has been exhausted.
+    const used = new Set(deck);
+    let available = wordBank[category]
+        .map((_, i) => i)
+        .filter(i => !used.has(i));
+
+    if (available.length < count) {
+        // The pool is exhausted. Start a fresh shuffled cycle.
+        deck = shuffleArray(wordBank[category].map((_, i) => i));
+    } else if (deck.length < count) {
+        deck = [...deck, ...shuffleArray(available)];
+    }
+
+    const selectedIndexes = deck.slice(0, count);
+    deck = deck.slice(count);
+
+    localStorage.setItem(coverageKey, JSON.stringify(deck));
+
+    return selectedIndexes.map(i => ({ ...wordBank[category][i], category }));
 }
 
 // Start Quiz Session
@@ -2084,7 +2118,7 @@ function showResults() {
         div.innerHTML = `
             <div class="review-q">${idx + 1}. Correct Word: <strong>${item.word}</strong></div>
             <div class="review-ans">
-                <strong>Clue:</strong> ${item.clue}<br>
+                <strong>Meaning:</strong> ${item.clue}<br>
                 <strong>Your Spelling:</strong> ${item.userTyped} ${item.isCorrect ? '✅' : '❌'}
             </div>
         `;
