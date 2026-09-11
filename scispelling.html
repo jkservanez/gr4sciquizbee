@@ -432,8 +432,9 @@
             <div class="setting-group">
                 <label for="voiceSelect">Pronunciation Voice:</label>
                 <select id="voiceSelect" class="select-input">
-                    <option value="">Loading voices...</option>
+                    <option value="">Loading English voices...</option>
                 </select>
+                <small style="display:block; margin-top:6px; opacity:0.78; line-height:1.35;">★ Recommended voices are shown first. On iPhone/iPad, the choices come from Apple's installed English system voices.</small>
             </div>
             
             <div class="setting-group">
@@ -1831,94 +1832,188 @@ let currentSpellingWords = [];
 let currentIndex = 0;
 let userSpellingAnswers = [];
 let scores = { easy: 0, medium: 0, hard: 0 };
-let selectedVoiceName = ""; // Persist selected voice by name
+let selectedVoiceName = localStorage.getItem('bcopsSpellingVoice_v5') || "";
 
 // Speech Synthesis Setup
+// iPhone/iPad Safari exposes Apple's system voices through Web Speech. The browser
+// cannot install a new voice, so we present a small curated list first and prefer
+// higher-quality English voices when they are available.
+const IOS_VOICE_PRIORITY = [
+    'Ava (Enhanced)', 'Ava', 'Samantha (Enhanced)', 'Samantha',
+    'Allison (Enhanced)', 'Allison', 'Alex (Enhanced)', 'Alex',
+    'Karen (Enhanced)', 'Karen', 'Daniel (Enhanced)', 'Daniel',
+    'Moira (Enhanced)', 'Moira', 'Tessa (Enhanced)', 'Tessa'
+];
+
+function isIOSDevice() {
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+           (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+}
+
+function isEnglishVoice(voice) {
+    return !!voice && /^en(?:-|$)/i.test(voice.lang || '');
+}
+
+function voicePriority(voice) {
+    const name = (voice.name || '').toLowerCase();
+    const idx = IOS_VOICE_PRIORITY.findIndex(v => name === v.toLowerCase());
+    if (idx >= 0) return idx;
+    // Some iOS versions append regional information or a voice variant name.
+    const fuzzy = IOS_VOICE_PRIORITY.findIndex(v => name.includes(v.toLowerCase()));
+    if (fuzzy >= 0) return fuzzy + 0.5;
+    if (/siri|premium|enhanced|natural/.test(name)) return 20;
+    if (/google/.test(name)) return 30;
+    if (/microsoft|neural/.test(name)) return 35;
+    return 100;
+}
+
+function voiceLabel(voice, recommended) {
+    const lang = voice.lang || 'en';
+    const region = lang.toLowerCase() === 'en-us' ? 'English (US)' :
+                   lang.toLowerCase() === 'en-gb' ? 'English (UK)' :
+                   lang.toLowerCase() === 'en-au' ? 'English (Australia)' :
+                   lang.toLowerCase() === 'en-ie' ? 'English (Ireland)' :
+                   lang.toLowerCase() === 'en-in' ? 'English (India)' : lang;
+    return `${recommended ? '★ ' : ''}${voice.name} — ${region}`;
+}
+
+function getEnglishVoices() {
+    if (!('speechSynthesis' in window)) return [];
+    return window.speechSynthesis.getVoices().filter(isEnglishVoice);
+}
+
 function populateVoiceList() {
     if (!('speechSynthesis' in window)) return;
 
-    const voices = window.speechSynthesis.getVoices();
+    const voices = getEnglishVoices();
     const voiceSelect = document.getElementById('voiceSelect');
-    
-    // Preserve current selection if possible
+    if (!voiceSelect) return;
+
     const currentVal = voiceSelect.value || selectedVoiceName;
     voiceSelect.innerHTML = '';
 
     if (voices.length === 0) {
-        voiceSelect.innerHTML = '<option value="">Default System Voice</option>';
+        voiceSelect.innerHTML = '<option value="">System English voice (browser default)</option>';
+        selectedVoiceName = '';
         return;
     }
 
-    // Sort: Google voices & English voices first
+    const ios = isIOSDevice();
     voices.sort((a, b) => {
-        const aGoogle = a.name.includes('Google');
-        const bGoogle = b.name.includes('Google');
-        if (aGoogle && !bGoogle) return -1;
-        if (!aGoogle && bGoogle) return 1;
-
-        const aIsEng = a.lang.toLowerCase().startsWith('en');
-        const bIsEng = b.lang.toLowerCase().startsWith('en');
-        if (aIsEng && !bIsEng) return -1;
-        if (!aIsEng && bIsEng) return 1;
+        const pa = voicePriority(a), pb = voicePriority(b);
+        if (pa !== pb) return pa - pb;
+        // Prefer US English for this English-language spelling bee when otherwise equal.
+        const au = a.lang.toLowerCase() === 'en-us' ? 0 : 1;
+        const bu = b.lang.toLowerCase() === 'en-us' ? 0 : 1;
+        if (au !== bu) return au - bu;
         return a.name.localeCompare(b.name);
     });
 
-    voices.forEach((voice) => {
+    // On iOS, keep the list focused on Apple's useful English choices. If none of
+    // the known names are exposed, fall back to every English system voice.
+    let displayVoices = voices;
+    if (ios) {
+        const preferred = voices.filter(v => voicePriority(v) < 100);
+        if (preferred.length) displayVoices = preferred;
+    }
+
+    // Recommended default: first high-quality English voice in the curated order.
+    const best = displayVoices[0];
+
+    displayVoices.forEach((voice, index) => {
         const option = document.createElement('option');
-        const isGoogle = voice.name.includes('Google') ? '⭐ [Google] ' : '';
-        option.textContent = `${isGoogle}${voice.name} (${voice.lang})`;
-        option.value = voice.name; // Store unique voice name as value
+        option.textContent = voiceLabel(voice, index === 0);
+        // voiceURI is safer than voice.name when multiple voices share a name.
+        option.value = voice.voiceURI || voice.name;
+        option.dataset.voiceName = voice.name;
+        option.dataset.voiceLang = voice.lang;
         voiceSelect.appendChild(option);
     });
 
-    if (currentVal && Array.from(voiceSelect.options).some(o => o.value === currentVal)) {
-        voiceSelect.value = currentVal;
-    } else {
-        selectedVoiceName = voiceSelect.value;
+    // Restore the selected voice if it is still available.
+    const match = Array.from(voiceSelect.options).find(o =>
+        o.value === currentVal || o.dataset.voiceName === currentVal
+    );
+
+    if (match) {
+        voiceSelect.value = match.value;
+        selectedVoiceName = match.dataset.voiceName || match.value;
+    } else if (best) {
+        voiceSelect.value = best.voiceURI || best.name;
+        selectedVoiceName = best.name;
+        localStorage.setItem('bcopsSpellingVoice_v5', selectedVoiceName);
     }
 }
 
-populateVoiceList();
-if ('speechSynthesis' in window) {
+function initializeSpeechVoices() {
+    if (!('speechSynthesis' in window)) return;
+    // iOS may return an empty list until voiceschanged fires.
+    populateVoiceList();
+    setTimeout(populateVoiceList, 250);
+    setTimeout(populateVoiceList, 1000);
     window.speechSynthesis.onvoiceschanged = populateVoiceList;
 }
 
-// Track user voice selection explicitly
+initializeSpeechVoices();
+
+// Track user voice selection explicitly and persist it.
 document.getElementById('voiceSelect').addEventListener('change', function() {
-    selectedVoiceName = this.value;
+    const option = this.options[this.selectedIndex];
+    selectedVoiceName = option ? (option.dataset.voiceName || option.value) : '';
+    localStorage.setItem('bcopsSpellingVoice_v5', selectedVoiceName);
 });
 
 function getSelectedVoice() {
     if (!('speechSynthesis' in window)) return null;
-    const voices = window.speechSynthesis.getVoices();
-    const targetName = selectedVoiceName || document.getElementById('voiceSelect').value;
-    return voices.find(v => v.name === targetName) || null;
+    const voices = getEnglishVoices();
+    const select = document.getElementById('voiceSelect');
+    const option = select && select.options[select.selectedIndex];
+    const targetName = (option && option.dataset.voiceName) || selectedVoiceName;
+
+    if (targetName) {
+        const exact = voices.find(v => v.name === targetName);
+        if (exact) return exact;
+    }
+
+    // If iOS has not finished loading voices, use the best available English voice.
+    return voices.slice().sort((a, b) => voicePriority(a) - voicePriority(b))[0] || null;
+}
+
+function createSpeechUtterance(text, selectedSpeed, voice) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = selectedSpeed;
+    // A neutral pitch avoids exaggerated/childish intonation on some iOS voices.
+    utterance.pitch = 1.0;
+    utterance.volume = 1.0;
+    if (voice) {
+        utterance.voice = voice;
+        utterance.lang = voice.lang || 'en-US';
+    } else {
+        utterance.lang = 'en-US';
+    }
+    return utterance;
 }
 
 function speakClueAndWord() {
     if (!('speechSynthesis' in window)) return;
 
-    window.speechSynthesis.cancel(); // Reset any active speech queue
+    window.speechSynthesis.cancel();
 
     const item = currentSpellingWords[currentIndex];
+    if (!item) return;
     const selectedSpeed = parseFloat(document.getElementById('speedSelect').value);
     const voice = getSelectedVoice();
 
-    // Utterance 1: Clue
-    const clueUtterance = new SpeechSynthesisUtterance(item.clue);
-    clueUtterance.rate = selectedSpeed;
-    if (voice) clueUtterance.voice = voice;
+    const clueUtterance = createSpeechUtterance(item.clue, selectedSpeed, voice);
 
-    // Utterance 2: "Spell: [Word]" triggered upon clue finish
     clueUtterance.onend = () => {
         setTimeout(() => {
-            const targetUtterance = new SpeechSynthesisUtterance(`Spell: ${item.word}`);
-            targetUtterance.rate = selectedSpeed;
-            // Always re-query voice right before speaking to prevent browser voice resets
+            if (currentIndex < 0 || !currentSpellingWords[currentIndex]) return;
+            const targetItem = currentSpellingWords[currentIndex];
             const freshVoice = getSelectedVoice();
-            if (freshVoice) targetUtterance.voice = freshVoice;
+            const targetUtterance = createSpeechUtterance(`Spell: ${targetItem.word}`, selectedSpeed, freshVoice);
             window.speechSynthesis.speak(targetUtterance);
-        }, 400);
+        }, 350);
     };
 
     window.speechSynthesis.speak(clueUtterance);
@@ -1930,13 +2025,11 @@ function speakWordOnly() {
     window.speechSynthesis.cancel();
 
     const item = currentSpellingWords[currentIndex];
+    if (!item) return;
     const selectedSpeed = parseFloat(document.getElementById('speedSelect').value);
     const voice = getSelectedVoice();
 
-    const utterance = new SpeechSynthesisUtterance(`Spell: ${item.word}`);
-    utterance.rate = selectedSpeed;
-    if (voice) utterance.voice = voice;
-
+    const utterance = createSpeechUtterance(`Spell: ${item.word}`, selectedSpeed, voice);
     window.speechSynthesis.speak(utterance);
 }
 
@@ -1944,11 +2037,12 @@ function testSelectedVoice() {
     if (!('speechSynthesis' in window)) return;
 
     window.speechSynthesis.cancel();
-    const testUtterance = new SpeechSynthesisUtterance("Blood vessels that return deoxygenated blood back to the heart. Spell: VEINS.");
-    testUtterance.rate = parseFloat(document.getElementById('speedSelect').value);
     const voice = getSelectedVoice();
-    if (voice) testUtterance.voice = voice;
-
+    const testUtterance = createSpeechUtterance(
+        'Blood vessels that return deoxygenated blood back to the heart. Spell: veins.',
+        parseFloat(document.getElementById('speedSelect').value),
+        voice
+    );
     window.speechSynthesis.speak(testUtterance);
 }
 
