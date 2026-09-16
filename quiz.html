@@ -545,6 +545,9 @@
 </div>
 
 <script>
+// Timer handle must exist before startQuiz() calls clearInterval().
+let timerInterval = null;
+
 // Question Database
 const questionBank = {
   "easy": [
@@ -1389,18 +1392,18 @@ const questionBank = {
       "exp": "Forests feature distinct vertical canopy layers that create varied microhabitats for diverse plant and animal species."
     },
     {
-      "q": "What do you call an animal that hunts and feeds on other animals?",
-      "q1": "Which term describes an animal that hunts and feeds on other animals?",
-      "q2": "Can you identify the term for an animal that hunts and feeds on other animals?",
-      "q3": "Based on this description, what do we call an animal that hunts and feeds on other animals?",
+      "q": "What do we call an animal that hunts and catches another animal for food?",
+      "q1": "Which term describes an animal that hunts and catches another animal for food?",
+      "q2": "What term means an animal that hunts another animal for food?",
+      "q3": "Which word names an animal that hunts another animal for food?",
       "a": "Predator",
       "options": [
         "Predator",
+        "Consumer",
         "Prey",
-        "Herbivore",
-        "Carnivore"
+        "Herbivore"
       ],
-      "exp": "Predators maintain ecological balance by controlling prey populations through hunting and consumption."
+      "exp": "A predator is an animal that hunts and catches another animal for food. A consumer is a broader term for an organism that gets energy by eating other organisms."
     },
     {
       "q": "What do you call an animal that is hunted and eaten by a predator?",
@@ -1643,7 +1646,7 @@ const questionBank = {
     {
       "q": "Which organelle is known as the “powerhouse of the cell”?",
       "q1": "Can you identify which organelle is known as the “powerhouse of the cell”?",
-      "q2": "Which choice matches rganelle is known as the “powerhouse of the cell”?",
+      "q2": "Which choice matches the organelle known as the “powerhouse of the cell”?",
       "q3": "Based on the description, which organelle is known as the “powerhouse of the cell”?",
       "a": "Mitochondrion",
       "exp": "The teacher reviewer gives the answer as Mitochondrion.",
@@ -1675,10 +1678,10 @@ const questionBank = {
       "q3": "What do we call anything that has mass and occupies space?",
       "a": "Matter",
       "options": [
-        "Larva",
-        "Femur",
-        "Sound energy",
-        "Matter"
+        "Matter",
+        "Mass",
+        "Volume",
+        "Density"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Matter as the answer.",
       "source": "Teacher Science 4",
@@ -1691,10 +1694,10 @@ const questionBank = {
       "q3": "Which organ pumps blood throughout the body?",
       "a": "Heart",
       "options": [
-        "Carnivores",
-        "Decomposers",
-        "Aquatic plants",
-        "Heart"
+        "Heart",
+        "Lungs",
+        "Brain",
+        "Kidneys"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Heart as the answer.",
       "source": "Teacher Science 4",
@@ -1708,9 +1711,9 @@ const questionBank = {
       "a": "Lungs",
       "options": [
         "Lungs",
-        "Decomposers",
-        "Photosynthesis",
-        "Migration"
+        "Heart",
+        "Brain",
+        "Trachea"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Lungs as the answer.",
       "source": "Teacher Science 4",
@@ -1723,10 +1726,10 @@ const questionBank = {
       "q3": "Which organ controls most activities of the body?",
       "a": "Brain",
       "options": [
-        "Involuntary muscles",
-        "Habitat",
-        "Phloem",
-        "Brain"
+        "Brain",
+        "Spinal cord",
+        "Heart",
+        "Lungs"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Brain as the answer.",
       "source": "Teacher Science 4",
@@ -1739,10 +1742,10 @@ const questionBank = {
       "q3": "What part of a plant absorbs water and minerals from the soil?",
       "a": "Roots",
       "options": [
-        "Epiphytes",
-        "Forest",
         "Roots",
-        "Liver"
+        "Leaves",
+        "Xylem",
+        "Phloem"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Roots as the answer.",
       "source": "Teacher Science 4",
@@ -1755,10 +1758,10 @@ const questionBank = {
       "q3": "What part of a plant makes most of its food?",
       "a": "Leaves",
       "options": [
-        "Reptiles",
-        "Cell",
         "Leaves",
-        "Tendons"
+        "Roots",
+        "Xylem",
+        "Phloem"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Leaves as the answer.",
       "source": "Teacher Science 4",
@@ -1772,9 +1775,9 @@ const questionBank = {
       "a": "Carbon dioxide",
       "options": [
         "Carbon dioxide",
-        "Migration",
-        "Hibernation",
-        "Cartilage"
+        "Oxygen",
+        "Nitrogen",
+        "Water vapor"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Carbon dioxide as the answer.",
       "source": "Teacher Science 4",
@@ -1787,10 +1790,10 @@ const questionBank = {
       "q3": "What gas do humans need for breathing?",
       "a": "Oxygen",
       "options": [
-        "Chemical energy",
         "Oxygen",
-        "Small intestine",
-        "Pupa"
+        "Carbon dioxide",
+        "Nitrogen",
+        "Water vapor"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Oxygen as the answer.",
       "source": "Teacher Science 4",
@@ -1803,10 +1806,10 @@ const questionBank = {
       "q3": "What is the process by which plants make their own food?",
       "a": "Photosynthesis",
       "options": [
-        "Hibernation",
-        "Arteries",
-        "Gills",
-        "Photosynthesis"
+        "Photosynthesis",
+        "Respiration",
+        "Germination",
+        "Transpiration"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Photosynthesis as the answer.",
       "source": "Teacher Science 4",
@@ -1819,10 +1822,10 @@ const questionBank = {
       "q3": "What do we call animals that eat only plants?",
       "a": "Herbivores",
       "options": [
-        "Endotherms",
         "Herbivores",
-        "Skeletal System",
-        "Cuticle"
+        "Carnivores",
+        "Omnivores",
+        "Insectivores"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Herbivores as the answer.",
       "source": "Teacher Science 4",
@@ -1836,9 +1839,9 @@ const questionBank = {
       "a": "Carnivores",
       "options": [
         "Carnivores",
-        "Prey",
-        "Xylem",
-        "Habitat"
+        "Herbivores",
+        "Omnivores",
+        "Insectivores"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Carnivores as the answer.",
       "source": "Teacher Science 4",
@@ -1851,10 +1854,10 @@ const questionBank = {
       "q3": "What do we call animals that eat both plants and animals?",
       "a": "Omnivores",
       "options": [
-        "Gills",
         "Omnivores",
         "Herbivores",
-        "Producers"
+        "Carnivores",
+        "Insectivores"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Omnivores as the answer.",
       "source": "Teacher Science 4",
@@ -1867,10 +1870,10 @@ const questionBank = {
       "q3": "What force pulls objects toward Earth?",
       "a": "Gravity",
       "options": [
-        "Producers",
-        "Herbivores",
         "Gravity",
-        "Epidermis"
+        "Force",
+        "Friction",
+        "Buoyant force"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Gravity as the answer.",
       "source": "Teacher Science 4",
@@ -1883,10 +1886,10 @@ const questionBank = {
       "q3": "What is a push or pull called?",
       "a": "Force",
       "options": [
-        "Carnivores",
-        "Predator",
-        "Cuticle",
-        "Force"
+        "Force",
+        "Gravity",
+        "Friction",
+        "Buoyant force"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Force as the answer.",
       "source": "Teacher Science 4",
@@ -1900,9 +1903,9 @@ const questionBank = {
       "a": "Light energy",
       "options": [
         "Light energy",
-        "Nephrons",
-        "Rib cage",
-        "Trachea"
+        "Sound energy",
+        "Chemical energy",
+        "Kinetic energy"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Light energy as the answer.",
       "source": "Teacher Science 4",
@@ -1915,10 +1918,10 @@ const questionBank = {
       "q3": "What is moving air called?",
       "a": "Wind",
       "options": [
-        "Aerobic exercise",
-        "Producers",
         "Wind",
-        "Germination"
+        "Air pressure",
+        "Weather",
+        "Wind vane"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Wind as the answer.",
       "source": "Teacher Science 4",
@@ -1931,10 +1934,10 @@ const questionBank = {
       "q3": "What instrument measures temperature?",
       "a": "Thermometer",
       "options": [
-        "Chlorophyll",
         "Thermometer",
-        "Habitat",
-        "Aerobic exercise"
+        "Rain gauge",
+        "Anemometer",
+        "Barometer"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Thermometer as the answer.",
       "source": "Teacher Science 4",
@@ -4371,10 +4374,10 @@ const questionBank = {
       "q3": "Which state of matter has a definite shape and volume?",
       "a": "Solid",
       "options": [
-        "Endangered species",
         "Solid",
-        "Biotic factors",
-        "Fins"
+        "Liquid",
+        "Gas",
+        "Plasma"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Solid as the answer.",
       "source": "Teacher Science 4",
@@ -4387,10 +4390,10 @@ const questionBank = {
       "q3": "Which state of matter takes the shape of its container but has a definite volume?",
       "a": "Liquid",
       "options": [
-        "Grow foods",
-        "Transparent materials",
         "Liquid",
-        "Host"
+        "Solid",
+        "Gas",
+        "Plasma"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Liquid as the answer.",
       "source": "Teacher Science 4",
@@ -4403,10 +4406,10 @@ const questionBank = {
       "q3": "Which state of matter has neither a definite shape nor a definite volume?",
       "a": "Gas",
       "options": [
-        "The Moon",
         "Gas",
-        "Cardiac muscle",
-        "Radiation"
+        "Solid",
+        "Liquid",
+        "Plasma"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Gas as the answer.",
       "source": "Teacher Science 4",
@@ -4419,10 +4422,10 @@ const questionBank = {
       "q3": "What change occurs when ice becomes liquid water?",
       "a": "Melting",
       "options": [
-        "Sandy soil",
-        "Translucent",
         "Melting",
-        "Floatability"
+        "Freezing",
+        "Evaporation",
+        "Condensation"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Melting as the answer.",
       "source": "Teacher Science 4",
@@ -4435,10 +4438,10 @@ const questionBank = {
       "q3": "What change occurs when liquid water becomes ice?",
       "a": "Freezing",
       "options": [
-        "Atmosphere",
         "Freezing",
-        "Pistil",
-        "Rotation"
+        "Melting",
+        "Evaporation",
+        "Condensation"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Freezing as the answer.",
       "source": "Teacher Science 4",
@@ -4452,9 +4455,9 @@ const questionBank = {
       "a": "Evaporation",
       "options": [
         "Evaporation",
-        "Scurvy",
-        "Heat",
-        "Red blood cells"
+        "Melting",
+        "Freezing",
+        "Condensation"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Evaporation as the answer.",
       "source": "Teacher Science 4",
@@ -4467,10 +4470,10 @@ const questionBank = {
       "q3": "What change occurs when water vapor becomes liquid water?",
       "a": "Condensation",
       "options": [
-        "Osteoporosis",
-        "Sweat pores",
         "Condensation",
-        "Smooth muscle"
+        "Melting",
+        "Freezing",
+        "Evaporation"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Condensation as the answer.",
       "source": "Teacher Science 4",
@@ -4483,10 +4486,10 @@ const questionBank = {
       "q3": "What is the process by which water falls from clouds?",
       "a": "Precipitation",
       "options": [
-        "Exoskeleton",
-        "Buoyant force",
-        "Stomata",
-        "Precipitation"
+        "Precipitation",
+        "Evaporation",
+        "Condensation",
+        "Water cycle"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Precipitation as the answer.",
       "source": "Teacher Science 4",
@@ -4499,10 +4502,10 @@ const questionBank = {
       "q3": "What is the continuous movement of water through nature called?",
       "a": "Water cycle",
       "options": [
-        "Force",
-        "Inclined plane",
         "Water cycle",
-        "Commensalism"
+        "Evaporation",
+        "Condensation",
+        "Precipitation"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Water cycle as the answer.",
       "source": "Teacher Science 4",
@@ -4515,10 +4518,10 @@ const questionBank = {
       "q3": "What layer of gases surrounds Earth?",
       "a": "Atmosphere",
       "options": [
-        "Bulbs",
         "Atmosphere",
-        "Experiment",
-        "Pancreas"
+        "Hydrosphere",
+        "Lithosphere",
+        "Biosphere"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Atmosphere as the answer.",
       "source": "Teacher Science 4",
@@ -4531,10 +4534,10 @@ const questionBank = {
       "q3": "What instrument is used to measure rainfall?",
       "a": "Rain gauge",
       "options": [
-        "Gas",
-        "Lever",
         "Rain gauge",
-        "Tendrils"
+        "Thermometer",
+        "Anemometer",
+        "Wind vane"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Rain gauge as the answer.",
       "source": "Teacher Science 4",
@@ -4547,10 +4550,10 @@ const questionBank = {
       "q3": "What instrument measures wind speed?",
       "a": "Anemometer",
       "options": [
-        "Endemic species",
         "Anemometer",
-        "Hump",
-        "Humus"
+        "Thermometer",
+        "Rain gauge",
+        "Wind vane"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Anemometer as the answer.",
       "source": "Teacher Science 4",
@@ -4563,10 +4566,10 @@ const questionBank = {
       "q3": "What instrument shows wind direction?",
       "a": "Wind vane",
       "options": [
-        "Classification",
         "Wind vane",
-        "Reflection",
-        "Seismology"
+        "Thermometer",
+        "Rain gauge",
+        "Anemometer"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Wind vane as the answer.",
       "source": "Teacher Science 4",
@@ -4580,9 +4583,9 @@ const questionBank = {
       "a": "Earth's rotation",
       "options": [
         "Earth's rotation",
-        "Moon",
-        "Malnutrition",
-        "Scurvy"
+        "Earth’s revolution around the Sun",
+        "Rotation",
+        "Revolution"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Earth's rotation as the answer.",
       "source": "Teacher Science 4",
@@ -4595,10 +4598,10 @@ const questionBank = {
       "q3": "What causes a year on Earth?",
       "a": "Earth's revolution around the Sun",
       "options": [
-        "Tendrils",
         "Earth's revolution around the Sun",
-        "Land breeze",
-        "Webbed feet"
+        "Earth’s rotation",
+        "Rotation",
+        "Orbit"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Earth's revolution around the Sun as the answer.",
       "source": "Teacher Science 4",
@@ -4611,10 +4614,10 @@ const questionBank = {
       "q3": "What do scientists use to make careful observations of very small objects?",
       "a": "Microscope",
       "options": [
-        "Humidity",
-        "Fertilization",
         "Microscope",
-        "Gravity"
+        "Telescope",
+        "Thermometer",
+        "Barometer"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Microscope as the answer.",
       "source": "Teacher Science 4",
@@ -4627,10 +4630,10 @@ const questionBank = {
       "q3": "What property describes how heavy or light an object is for its size?",
       "a": "Density",
       "options": [
-        "Osteoporosis",
-        "Plasma",
         "Density",
-        "Spores"
+        "Mass",
+        "Volume",
+        "Weight"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Density as the answer.",
       "source": "Teacher Science 4",
@@ -4643,10 +4646,10 @@ const questionBank = {
       "q3": "What happens when two surfaces rub against each other and resist movement?",
       "a": "Friction",
       "options": [
-        "Wind dispersal",
-        "Screw",
         "Friction",
-        "Sandy soil"
+        "Gravity",
+        "Magnetic force",
+        "Buoyant force"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Friction as the answer.",
       "source": "Teacher Science 4",
@@ -4660,9 +4663,9 @@ const questionBank = {
       "a": "Kinetic energy",
       "options": [
         "Kinetic energy",
-        "Runners",
-        "Convection",
-        "Host"
+        "Potential energy",
+        "Chemical energy",
+        "Light energy"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Kinetic energy as the answer.",
       "source": "Teacher Science 4",
@@ -4675,10 +4678,10 @@ const questionBank = {
       "q3": "What is stored energy called?",
       "a": "Potential energy",
       "options": [
-        "Pistil",
-        "Diurnal",
-        "Endemic species",
-        "Potential energy"
+        "Potential energy",
+        "Kinetic energy",
+        "Chemical energy",
+        "Light energy"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Potential energy as the answer.",
       "source": "Teacher Science 4",
@@ -4691,10 +4694,10 @@ const questionBank = {
       "q3": "What force opposes motion between two surfaces?",
       "a": "Friction",
       "options": [
-        "Loam soil",
-        "Convection",
         "Friction",
-        "Non-porous materials"
+        "Gravity",
+        "Magnetic force",
+        "Buoyant force"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Friction as the answer.",
       "source": "Teacher Science 4",
@@ -4707,9 +4710,9 @@ const questionBank = {
       "q3": "What happens when light bends as it passes from one material to another?",
       "a": "Refraction",
       "options": [
-        "Buoyant force",
-        "Tides",
         "Refraction",
+        "Reflection",
+        "Conduction",
         "Radiation"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Refraction as the answer.",
@@ -4723,10 +4726,10 @@ const questionBank = {
       "q3": "What process allows green plants to make their own food using sunlight?",
       "a": "Photosynthesis",
       "options": [
-        "Water cycle",
-        "Tides",
-        "Fins",
-        "Photosynthesis"
+        "Photosynthesis",
+        "Respiration",
+        "Germination",
+        "Pollination"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Photosynthesis as the answer.",
       "source": "Teacher Science 4",
@@ -4739,10 +4742,10 @@ const questionBank = {
       "q3": "What force pulls objects toward the center of Earth?",
       "a": "Gravity",
       "options": [
-        "Pollination",
-        "Desertification",
         "Gravity",
-        "Pulley"
+        "Friction",
+        "Magnetic force",
+        "Buoyant force"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Gravity as the answer.",
       "source": "Teacher Science 4",
@@ -4756,9 +4759,9 @@ const questionBank = {
       "a": "Evaporation",
       "options": [
         "Evaporation",
-        "Joint dislocation",
-        "Spring balance",
-        "Fins"
+        "Melting",
+        "Freezing",
+        "Condensation"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Evaporation as the answer.",
       "source": "Teacher Science 4",
@@ -4771,10 +4774,10 @@ const questionBank = {
       "q3": "What instrument measures atmospheric pressure?",
       "a": "Barometer",
       "options": [
-        "Topsoil",
         "Barometer",
-        "Osteoporosis",
-        "Non-renewable resources"
+        "Thermometer",
+        "Rain gauge",
+        "Anemometer"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Barometer as the answer.",
       "source": "Teacher Science 4",
@@ -4787,10 +4790,10 @@ const questionBank = {
       "q3": "Which layer of Earth is made mostly of solid rock and forms the continents and ocean floors?",
       "a": "Crust",
       "options": [
-        "Lever",
-        "Sweat pores",
         "Crust",
-        "Cellular respiration"
+        "Mantle",
+        "Core",
+        "Lithosphere"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Crust as the answer.",
       "source": "Teacher Science 4",
@@ -4803,10 +4806,10 @@ const questionBank = {
       "q3": "What do you call animals that eat both plants and animals?",
       "a": "Omnivores",
       "options": [
-        "Host",
-        "365¼ days",
-        "Coral reef",
-        "Omnivores"
+        "Omnivores",
+        "Herbivores",
+        "Carnivores",
+        "Insectivores"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Omnivores as the answer.",
       "source": "Teacher Science 4",
@@ -4820,9 +4823,9 @@ const questionBank = {
       "a": "Condensation",
       "options": [
         "Condensation",
-        "Humus",
-        "Plasma",
-        "Buoyant force"
+        "Melting",
+        "Freezing",
+        "Evaporation"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Condensation as the answer.",
       "source": "Teacher Science 4",
@@ -4835,10 +4838,10 @@ const questionBank = {
       "q3": "What instrument is used to measure wind speed?",
       "a": "Anemometer",
       "options": [
-        "Scurvy",
-        "Osteoporosis",
         "Anemometer",
-        "Topsoil"
+        "Thermometer",
+        "Rain gauge",
+        "Wind vane"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Anemometer as the answer.",
       "source": "Teacher Science 4",
@@ -4852,9 +4855,9 @@ const questionBank = {
       "a": "Circulatory system",
       "options": [
         "Circulatory system",
-        "0°C",
-        "Joint dislocation",
-        "Biotic factors"
+        "Respiratory system",
+        "Digestive system",
+        "Nervous system"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Circulatory system as the answer.",
       "source": "Teacher Science 4",
@@ -4867,10 +4870,10 @@ const questionBank = {
       "q3": "What is the movement of Earth around the Sun called?",
       "a": "Revolution",
       "options": [
-        "Spore-bearing plants",
-        "Feathers",
         "Revolution",
-        "Incomplete Metamorphosis"
+        "Earth's rotation",
+        "Earth's revolution around the Sun",
+        "Rotation"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Revolution as the answer.",
       "source": "Teacher Science 4",
@@ -4883,10 +4886,10 @@ const questionBank = {
       "q3": "What is the movement of Earth on its axis called?",
       "a": "Rotation",
       "options": [
-        "Classification",
         "Rotation",
-        "0°C",
-        "Anemometer"
+        "Earth's rotation",
+        "Earth's revolution around the Sun",
+        "Revolution"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Rotation as the answer.",
       "source": "Teacher Science 4",
@@ -4899,10 +4902,10 @@ const questionBank = {
       "q3": "Which part of the plant transports water from the roots to the leaves?",
       "a": "Xylem",
       "options": [
-        "0°C",
-        "Glow foods",
-        "Sea breeze",
-        "Xylem"
+        "Xylem",
+        "Phloem",
+        "Roots",
+        "Leaves"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Xylem as the answer.",
       "source": "Teacher Science 4",
@@ -4915,10 +4918,10 @@ const questionBank = {
       "q3": "Which plant tissue transports food from the leaves to other parts?",
       "a": "Phloem",
       "options": [
-        "Friction",
-        "Conductor",
         "Phloem",
-        "Climate"
+        "Xylem",
+        "Roots",
+        "Leaves"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Phloem as the answer.",
       "source": "Teacher Science 4",
@@ -4931,10 +4934,10 @@ const questionBank = {
       "q3": "Which blood cells help defend the body against disease-causing organisms?",
       "a": "White blood cells",
       "options": [
-        "Land breeze",
         "White blood cells",
-        "Parasitism",
-        "Saliva"
+        "Red blood cells",
+        "Platelets",
+        "Plasma"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives White blood cells as the answer.",
       "source": "Teacher Science 4",
@@ -4947,10 +4950,10 @@ const questionBank = {
       "q3": "What is the ability of an organism to survive in its environment called?",
       "a": "Adaptation",
       "options": [
-        "Conductor",
-        "Digestion",
-        "Light energy",
-        "Adaptation"
+        "Adaptation",
+        "Camouflage",
+        "Migration",
+        "Hibernation"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Adaptation as the answer.",
       "source": "Teacher Science 4",
@@ -4963,10 +4966,10 @@ const questionBank = {
       "q3": "What is the relationship between organisms in which both benefit?",
       "a": "Mutualism",
       "options": [
-        "Spores",
-        "365¼ days",
-        "Feathers",
-        "Mutualism"
+        "Mutualism",
+        "Commensalism",
+        "Parasitism",
+        "Competition"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Mutualism as the answer.",
       "source": "Teacher Science 4",
@@ -4979,10 +4982,10 @@ const questionBank = {
       "q3": "What do you call an organism that makes its own food?",
       "a": "Producer",
       "options": [
-        "Diurnal",
-        "Molting",
-        "Weather",
-        "Producer"
+        "Producer",
+        "Consumer",
+        "Decomposer",
+        "Predator"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Producer as the answer.",
       "source": "Teacher Science 4",
@@ -4995,10 +4998,10 @@ const questionBank = {
       "q3": "What happens to the particles of a substance when it is heated?",
       "a": "They generally move faster",
       "options": [
-        "Precipitation",
-        "Rain gauge",
         "They generally move faster",
-        "Estuary"
+        "They generally move slower",
+        "They stop moving",
+        "They move at the same speed"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives They generally move faster as the answer.",
       "source": "Teacher Science 4",
@@ -5011,10 +5014,10 @@ const questionBank = {
       "q3": "Why does ice float on liquid water?",
       "a": "Ice is less dense than liquid water",
       "options": [
-        "Approximately 70% to 71%",
         "Ice is less dense than liquid water",
-        "Stamen",
-        "Gallbladder"
+        "Water is denser than ice",
+        "Ice is denser than water",
+        "Ice and water have the same density"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Ice is less dense than liquid water as the answer.",
       "source": "Teacher Science 4",
@@ -5027,10 +5030,10 @@ const questionBank = {
       "q3": "What property describes how much matter an object contains?",
       "a": "Mass",
       "options": [
-        "Epiglottis",
-        "Host",
-        "Core",
-        "Mass"
+        "Mass",
+        "Volume",
+        "Density",
+        "Weight"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Mass as the answer.",
       "source": "Teacher Science 4",
@@ -5043,10 +5046,10 @@ const questionBank = {
       "q3": "What property describes the amount of space occupied by an object?",
       "a": "Volume",
       "options": [
-        "Translucent",
-        "Rain gauge",
-        "Urinary bladder",
-        "Volume"
+        "Volume",
+        "Mass",
+        "Density",
+        "Length"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Volume as the answer.",
       "source": "Teacher Science 4",
@@ -5059,10 +5062,10 @@ const questionBank = {
       "q3": "What force opposes motion when two surfaces rub against each other?",
       "a": "Friction",
       "options": [
-        "Magnetism",
         "Friction",
-        "Spores",
-        "Anemometer"
+        "Gravity",
+        "Buoyant force",
+        "Magnetic force"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Friction as the answer.",
       "source": "Teacher Science 4",
@@ -5075,10 +5078,10 @@ const questionBank = {
       "q3": "What type of energy does an object have because of its motion?",
       "a": "Kinetic energy",
       "options": [
-        "Plasma",
-        "Insulator",
         "Kinetic energy",
-        "Mimicry"
+        "Potential energy",
+        "Chemical energy",
+        "Light energy"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Kinetic energy as the answer.",
       "source": "Teacher Science 4",
@@ -5092,9 +5095,9 @@ const questionBank = {
       "a": "Potential energy",
       "options": [
         "Potential energy",
-        "Stomata",
-        "Smooth muscle",
-        "Diurnal"
+        "Kinetic energy",
+        "Chemical energy",
+        "Light energy"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Potential energy as the answer.",
       "source": "Teacher Science 4",
@@ -6174,9 +6177,9 @@ const questionBank = {
       "a": "Germination",
       "options": [
         "Germination",
-        "Seedling",
-        "Decibel",
-        "Adaptation"
+        "Pollination",
+        "Metamorphosis",
+        "Fertilization"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Germination as the answer.",
       "source": "Teacher Science 4",
@@ -6189,10 +6192,10 @@ const questionBank = {
       "q3": "What is the transfer of pollen that helps plants reproduce?",
       "a": "Pollination",
       "options": [
-        "Mitosis",
         "Pollination",
-        "Outer planets",
-        "Eye of the typhoon"
+        "Germination",
+        "Seed dispersal",
+        "Fertilization"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Pollination as the answer.",
       "source": "Teacher Science 4",
@@ -6205,10 +6208,10 @@ const questionBank = {
       "q3": "What body system provides support and protection through bones?",
       "a": "Skeletal system",
       "options": [
-        "Epicenter",
-        "Pollution",
         "Skeletal system",
-        "Subsoil"
+        "Muscular system",
+        "Circulatory system",
+        "Respiratory system"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Skeletal system as the answer.",
       "source": "Teacher Science 4",
@@ -6221,10 +6224,10 @@ const questionBank = {
       "q3": "What group of animals includes frogs and salamanders?",
       "a": "Amphibians",
       "options": [
-        "Chromosomes",
-        "Potential energy",
         "Amphibians",
-        "Kinetic energy"
+        "Reptiles",
+        "Mammals",
+        "Invertebrates"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Amphibians as the answer.",
       "source": "Teacher Science 4",
@@ -6238,9 +6241,9 @@ const questionBank = {
       "a": "Reptiles",
       "options": [
         "Reptiles",
-        "Competition",
-        "Cumulus clouds",
-        "Metamorphosis"
+        "Amphibians",
+        "Mammals",
+        "Birds"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Reptiles as the answer.",
       "source": "Teacher Science 4",
@@ -6254,25 +6257,25 @@ const questionBank = {
       "a": "Predator",
       "options": [
         "Predator",
-        "Volcanology",
-        "Bedrock",
-        "Meteorology"
+        "Prey",
+        "Producer",
+        "Decomposer"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Predator as the answer.",
       "source": "Teacher Science 4",
       "teacher": true
     },
     {
-      "q": "What do we call an animal hunted by a predator?",
-      "q1": "What do we call an animal hunted by a predator?",
-      "q2": "What do we call an animal hunted by a predator?",
-      "q3": "What do we call an animal hunted by a predator?",
+      "q": "What do we call an animal that is hunted and eaten by a predator?",
+      "q1": "Which term describes an animal that is hunted and eaten by a predator?",
+      "q2": "What word names an animal that is hunted by a predator?",
+      "q3": "Which term means an animal that is hunted and eaten by another animal?",
       "a": "Prey",
       "options": [
         "Prey",
-        "Renewable resource",
-        "Effort",
-        "Seismologist"
+        "Predator",
+        "Consumer",
+        "Producer"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Prey as the answer.",
       "source": "Teacher Science 4",
@@ -6285,10 +6288,10 @@ const questionBank = {
       "q3": "What is the wearing away and movement of soil and rock called?",
       "a": "Erosion",
       "options": [
-        "Outer planets",
-        "Potential energy",
         "Erosion",
-        "Consumer"
+        "Weathering",
+        "Deposition",
+        "Weather"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Erosion as the answer.",
       "source": "Teacher Science 4",
@@ -6302,9 +6305,9 @@ const questionBank = {
       "a": "Weathering",
       "options": [
         "Weathering",
-        "Astronomer",
-        "Focus",
-        "Metamorphosis"
+        "Erosion",
+        "Deposition",
+        "Sediment transport"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Weathering as the answer.",
       "source": "Teacher Science 4",
@@ -6317,10 +6320,10 @@ const questionBank = {
       "q3": "What is the movement of animals from one region to another, often at certain times of the year?",
       "a": "Migration",
       "options": [
-        "Cumulonimbus clouds",
-        "Reduce, Reuse, Recycle",
         "Migration",
-        "Metamorphic rock"
+        "Hibernation",
+        "Camouflage",
+        "Adaptation"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Migration as the answer.",
       "source": "Teacher Science 4",
@@ -6333,10 +6336,10 @@ const questionBank = {
       "q3": "What is the ability of an organism to blend into its surroundings called?",
       "a": "Camouflage",
       "options": [
-        "Metamorphosis",
-        "Nervous system",
         "Camouflage",
-        "Melting"
+        "Migration",
+        "Adaptation",
+        "Hibernation"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Camouflage as the answer.",
       "source": "Teacher Science 4",
@@ -6349,10 +6352,10 @@ const questionBank = {
       "q3": "Which pigment absorbs most of the sunlight used in photosynthesis?",
       "a": "Chlorophyll",
       "options": [
-        "Moon phases",
         "Chlorophyll",
-        "Cirrus clouds",
-        "Prism"
+        "Carotene",
+        "Stomata",
+        "Xylem"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Chlorophyll as the answer.",
       "source": "Teacher Science 4",
@@ -6366,9 +6369,9 @@ const questionBank = {
       "a": "Conduction",
       "options": [
         "Conduction",
-        "Invertebrate",
-        "Tropical cyclone",
-        "Volcanologist"
+        "Convection",
+        "Radiation",
+        "Insulation"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Conduction as the answer.",
       "source": "Teacher Science 4",
@@ -6381,10 +6384,10 @@ const questionBank = {
       "q3": "What is the transfer of heat through the movement of liquids or gases called?",
       "a": "Convection",
       "options": [
-        "Stratosphere",
-        "Botany",
-        "Heredity",
-        "Convection"
+        "Convection",
+        "Conduction",
+        "Radiation",
+        "Insulation"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Convection as the answer.",
       "source": "Teacher Science 4",
@@ -6397,10 +6400,10 @@ const questionBank = {
       "q3": "What is the transfer of heat through electromagnetic waves called?",
       "a": "Radiation",
       "options": [
-        "Cumulus clouds",
         "Radiation",
-        "Heredity",
-        "Reduce, Reuse, Recycle"
+        "Conduction",
+        "Convection",
+        "Insulation"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Radiation as the answer.",
       "source": "Teacher Science 4",
@@ -6414,9 +6417,9 @@ const questionBank = {
       "a": "Earth rotates on its axis",
       "options": [
         "Earth rotates on its axis",
-        "New Moon",
-        "Closed circuit",
-        "Electromagnet"
+        "Earth's rotation",
+        "Earth's revolution around the Sun",
+        "Rotation"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Earth rotates on its axis as the answer.",
       "source": "Teacher Science 4",
@@ -6429,10 +6432,10 @@ const questionBank = {
       "q3": "What causes the different seasons on Earth?",
       "a": "Earth's axial tilt as it revolves around the Sun",
       "options": [
-        "Nucleus",
         "Earth's axial tilt as it revolves around the Sun",
-        "Cumulonimbus clouds",
-        "Biology"
+        "Earth’s rotation",
+        "The Moon’s orbit",
+        "Earth’s orbit"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Earth's axial tilt as it revolves around the Sun as the answer.",
       "source": "Teacher Science 4",
@@ -6445,10 +6448,10 @@ const questionBank = {
       "q3": "What causes ocean tides to rise and fall mainly?",
       "a": "The gravitational pull of the Moon",
       "options": [
-        "Parallel circuit",
-        "Cumulonimbus clouds",
         "The gravitational pull of the Moon",
-        "Asteroid Belt"
+        "The Sun’s heat",
+        "Earth’s rotation",
+        "Earth’s orbit"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives The gravitational pull of the Moon as the answer.",
       "source": "Teacher Science 4",
@@ -6461,10 +6464,10 @@ const questionBank = {
       "q3": "What instrument measures the amount of rainfall?",
       "a": "Rain gauge",
       "options": [
-        "New Moon",
         "Rain gauge",
-        "ROYGBIV",
-        "Atom"
+        "Thermometer",
+        "Anemometer",
+        "Wind vane"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Rain gauge as the answer.",
       "source": "Teacher Science 4",
@@ -6477,10 +6480,10 @@ const questionBank = {
       "q3": "What instrument shows the direction from which the wind is blowing?",
       "a": "Wind vane",
       "options": [
-        "Light energy → Chemical energy",
-        "Seismograph",
         "Wind vane",
-        "Troposphere"
+        "Thermometer",
+        "Rain gauge",
+        "Anemometer"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Wind vane as the answer.",
       "source": "Teacher Science 4",
@@ -6493,10 +6496,10 @@ const questionBank = {
       "q3": "What is the condition of the atmosphere at a particular place and time called?",
       "a": "Weather",
       "options": [
-        "Asteroid Belt",
-        "Conservation",
         "Weather",
-        "Conductors"
+        "Climate",
+        "Atmosphere",
+        "Air pressure"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Weather as the answer.",
       "source": "Teacher Science 4",
@@ -6509,10 +6512,10 @@ const questionBank = {
       "q3": "What is the long-term pattern of weather in a place called?",
       "a": "Climate",
       "options": [
-        "Storm surge",
-        "Ecology",
         "Climate",
-        "Botany"
+        "Weather",
+        "Atmosphere",
+        "Season"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Climate as the answer.",
       "source": "Teacher Science 4",
@@ -6525,10 +6528,10 @@ const questionBank = {
       "q3": "What process occurs when rocks are broken down by wind, water, ice, or temperature changes?",
       "a": "Weathering",
       "options": [
-        "Seismograph",
         "Weathering",
-        "Meteor",
-        "Troposphere"
+        "Erosion",
+        "Deposition",
+        "Crust"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Weathering as the answer.",
       "source": "Teacher Science 4",
@@ -6541,10 +6544,10 @@ const questionBank = {
       "q3": "What is the movement of weathered soil and rock from one place to another called?",
       "a": "Erosion",
       "options": [
-        "Open circuit",
-        "Evolution",
-        "Reforestation",
-        "Erosion"
+        "Erosion",
+        "Weathering",
+        "Deposition",
+        "Crust"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Erosion as the answer.",
       "source": "Teacher Science 4",
@@ -6558,9 +6561,9 @@ const questionBank = {
       "a": "Deposition",
       "options": [
         "Deposition",
-        "Microscope",
-        "Consumer",
-        "Magnetic field"
+        "Erosion",
+        "Weathering",
+        "Sediment transport"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Deposition as the answer.",
       "source": "Teacher Science 4",
@@ -6573,10 +6576,10 @@ const questionBank = {
       "q3": "What is the role of a predator in a food chain?",
       "a": "It hunts and eats other organisms",
       "options": [
-        "Comets",
         "It hunts and eats other organisms",
-        "Deforestation",
-        "Focus"
+        "It makes its own food",
+        "It eats plants only",
+        "It breaks down dead matter"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives It hunts and eats other organisms as the answer.",
       "source": "Teacher Science 4",
@@ -6589,10 +6592,10 @@ const questionBank = {
       "q3": "If the number of predators in an ecosystem suddenly decreases, what may happen to their prey?",
       "a": "The prey population may increase",
       "options": [
-        "Pollution",
-        "Reforestation",
-        "Decibel",
-        "The prey population may increase"
+        "The prey population may increase",
+        "The prey population may decrease",
+        "The predator population may increase",
+        "The prey population may stay about the same"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives The prey population may increase as the answer.",
       "source": "Teacher Science 4",
@@ -6605,10 +6608,10 @@ const questionBank = {
       "q3": "Why are decomposers important in an ecosystem?",
       "a": "They return nutrients to the environment",
       "options": [
-        "Effort",
-        "Protons",
         "They return nutrients to the environment",
-        "Metamorphic rock"
+        "They make sunlight",
+        "They produce oxygen for all organisms",
+        "They hunt and eat other organisms"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives They return nutrients to the environment as the answer.",
       "source": "Teacher Science 4",
@@ -6621,10 +6624,10 @@ const questionBank = {
       "q3": "What would most likely happen if plants disappeared from an ecosystem?",
       "a": "Food chains would be severely disrupted",
       "options": [
-        "Ecosystem",
         "Food chains would be severely disrupted",
-        "Meteorology",
-        "Outer planets"
+        "Only decomposers would disappear",
+        "The ecosystem would become more stable",
+        "Predator populations would immediately double"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Food chains would be severely disrupted as the answer.",
       "source": "Teacher Science 4",
@@ -6637,10 +6640,10 @@ const questionBank = {
       "q3": "A plant is placed in a dark room for several days. What process will be most directly affected?",
       "a": "Photosynthesis",
       "options": [
-        "Ecology",
-        "Mammals",
-        "Asteroid Belt",
-        "Photosynthesis"
+        "Photosynthesis",
+        "Respiration",
+        "Germination",
+        "Transpiration"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Photosynthesis as the answer.",
       "source": "Teacher Science 4",
@@ -6653,10 +6656,10 @@ const questionBank = {
       "q3": "Why does a metal spoon become hot when left in a cup of hot water?",
       "a": "Heat is transferred through conduction",
       "options": [
-        "Eye of the typhoon",
-        "Open circuit",
-        "Windbreaks",
-        "Heat is transferred through conduction"
+        "Heat is transferred through conduction",
+        "Convection",
+        "Radiation",
+        "Insulation"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Heat is transferred through conduction as the answer.",
       "source": "Teacher Science 4",
@@ -6669,10 +6672,10 @@ const questionBank = {
       "q3": "Why does warm air rise while cooler air sinks?",
       "a": "Warm air is less dense than cool air",
       "options": [
-        "Decibel",
         "Warm air is less dense than cool air",
-        "Series circuit",
-        "ROYGBIV"
+        "Warm air is denser than cool air",
+        "Warm and cool air have the same density",
+        "Cool air is less dense than warm air"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Warm air is less dense than cool air as the answer.",
       "source": "Teacher Science 4",
@@ -6685,10 +6688,10 @@ const questionBank = {
       "q3": "Why can a person see an object that does not produce its own light?",
       "a": "Light reflects from the object into the person's eyes",
       "options": [
-        "Chromosomes",
-        "Loudness",
-        "Paleontologist",
-        "Light reflects from the object into the person's eyes"
+        "Light reflects from the object into the person's eyes",
+        "Light reflects from the object into the person’s eyes",
+        "The object creates its own light",
+        "Sound travels from the object to the eyes"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Light reflects from the object into the person's eyes as the answer.",
       "source": "Teacher Science 4",
@@ -6701,10 +6704,10 @@ const questionBank = {
       "q3": "What happens to the pitch of a sound when its frequency increases?",
       "a": "The pitch becomes higher",
       "options": [
-        "Nervous system",
-        "New Moon",
-        "Nitrogen fixation",
-        "The pitch becomes higher"
+        "The pitch becomes higher",
+        "Pitch becomes lower",
+        "Pitch stays the same",
+        "The sound becomes silent"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives The pitch becomes higher as the answer.",
       "source": "Teacher Science 4",
@@ -6718,9 +6721,9 @@ const questionBank = {
       "a": "Sound requires a medium to travel",
       "options": [
         "Sound requires a medium to travel",
-        "Ecosystem",
-        "Tropical cyclone",
-        "Respiratory system"
+        "Sound can travel through a vacuum",
+        "Sound travels only through light",
+        "Sound can travel without particles"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Sound requires a medium to travel as the answer.",
       "source": "Teacher Science 4",
@@ -6734,9 +6737,9 @@ const questionBank = {
       "a": "Kinetic energy",
       "options": [
         "Kinetic energy",
-        "Paleontologist",
-        "DNA",
-        "Botany"
+        "Potential energy",
+        "Chemical energy",
+        "Light energy"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Kinetic energy as the answer.",
       "source": "Teacher Science 4",
@@ -6749,10 +6752,10 @@ const questionBank = {
       "q3": "Why does a rainbow appear after sunlight passes through raindrops?",
       "a": "Light is refracted, reflected, and dispersed by the water droplets",
       "options": [
-        "Lunar eclipse",
         "Light is refracted, reflected, and dispersed by the water droplets",
-        "Evolution",
-        "Digestive system"
+        "Water creates light by itself",
+        "Clouds reflect all colors equally",
+        "Light is absorbed by the raindrops"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Light is refracted, reflected, and dispersed by the water droplets as the answer.",
       "source": "Teacher Science 4",
@@ -6765,10 +6768,10 @@ const questionBank = {
       "q3": "Why does a dark-colored object usually become warmer in sunlight than a light-colored object?",
       "a": "Dark colors absorb more radiant energy",
       "options": [
-        "Physical change",
         "Dark colors absorb more radiant energy",
-        "Outer planets",
-        "Tectonic plates"
+        "Light colors absorb more radiant energy",
+        "Dark colors reflect more radiant energy",
+        "Color has no effect on radiant energy"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Dark colors absorb more radiant energy as the answer.",
       "source": "Teacher Science 4",
@@ -6781,10 +6784,10 @@ const questionBank = {
       "q3": "If there were no friction, what would happen to a moving object on a perfectly level surface?",
       "a": "It would continue moving",
       "options": [
-        "Prism",
-        "Comets",
-        "Hydroelectric energy",
-        "It would continue moving"
+        "It would continue moving",
+        "It would stop immediately",
+        "It would slow down gradually",
+        "It would move backward"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives It would continue moving as the answer.",
       "source": "Teacher Science 4",
@@ -6797,10 +6800,10 @@ const questionBank = {
       "q3": "Why are electrical wires commonly covered with plastic?",
       "a": "Plastic is an electrical insulator",
       "options": [
-        "Circulatory system",
-        "Electron",
         "Plastic is an electrical insulator",
-        "Non-biodegradability"
+        "Glass",
+        "Rubber",
+        "Wood"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Plastic is an electrical insulator as the answer.",
       "source": "Teacher Science 4",
@@ -6813,10 +6816,10 @@ const questionBank = {
       "q3": "Why does increasing the surface area of a solid often make it dissolve faster?",
       "a": "More particles are exposed to the solvent",
       "options": [
-        "Life cycle",
-        "Oxygen release",
-        "Windbreaks",
-        "More particles are exposed to the solvent"
+        "More particles are exposed to the solvent",
+        "The solid becomes a liquid",
+        "The solvent disappears",
+        "Fewer particles are exposed to the solvent"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives More particles are exposed to the solvent as the answer.",
       "source": "Teacher Science 4",
@@ -6829,10 +6832,10 @@ const questionBank = {
       "q3": "Why does salt disappear when mixed with water?",
       "a": "Salt dissolves and its particles spread throughout the water",
       "options": [
-        "Gravitational potential energy",
-        "Decomposition",
         "Salt dissolves and its particles spread throughout the water",
-        "Ecosystem"
+        "Salt melts into a new liquid",
+        "Salt changes into a gas",
+        "Salt remains as solid pieces at the bottom"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Salt dissolves and its particles spread throughout the water as the answer.",
       "source": "Teacher Science 4",
@@ -6845,10 +6848,10 @@ const questionBank = {
       "q3": "What happens to the boiling point of water when atmospheric pressure decreases?",
       "a": "Its boiling point decreases",
       "options": [
-        "Atom",
         "Its boiling point decreases",
-        "Subsoil",
-        "Erosion"
+        "Its boiling point increases",
+        "Its boiling point stays exactly the same",
+        "The boiling point depends only on the amount of water"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Its boiling point decreases as the answer.",
       "source": "Teacher Science 4",
@@ -6861,10 +6864,10 @@ const questionBank = {
       "q3": "What process changes a solid directly into a gas without becoming a liquid?",
       "a": "Sublimation",
       "options": [
-        "Wheel and axle",
-        "Focus",
         "Sublimation",
-        "Space is a vacuum with no matter/medium to carry sound waves"
+        "Deposition",
+        "Melting",
+        "Freezing"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Sublimation as the answer.",
       "source": "Teacher Science 4",
@@ -6877,10 +6880,10 @@ const questionBank = {
       "q3": "What process changes a gas directly into a solid?",
       "a": "Deposition",
       "options": [
-        "Atom",
-        "Producer",
-        "Seismograph",
-        "Deposition"
+        "Deposition",
+        "Sublimation",
+        "Melting",
+        "Freezing"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Deposition as the answer.",
       "source": "Teacher Science 4",
@@ -6894,9 +6897,9 @@ const questionBank = {
       "a": "Biodiversity",
       "options": [
         "Biodiversity",
-        "Microbiology",
-        "Ecology",
-        "Parallel circuit"
+        "Ecosystem",
+        "Habitat",
+        "Conservation"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Biodiversity as the answer.",
       "source": "Teacher Science 4",
@@ -6909,10 +6912,10 @@ const questionBank = {
       "q3": "What is the process by which green plants convert light energy into chemical energy?",
       "a": "Photosynthesis",
       "options": [
-        "Metamorphic rock",
         "Photosynthesis",
-        "Terracing",
-        "Troposphere"
+        "Respiration",
+        "Transpiration",
+        "Germination"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Photosynthesis as the answer.",
       "source": "Teacher Science 4",
@@ -6925,10 +6928,10 @@ const questionBank = {
       "q3": "What gas is released by plants as a major product of photosynthesis?",
       "a": "Oxygen",
       "options": [
-        "Consumer",
-        "Digestive system",
-        "Decomposition",
-        "Oxygen"
+        "Oxygen",
+        "Carbon dioxide",
+        "Nitrogen",
+        "Water vapor"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Oxygen as the answer.",
       "source": "Teacher Science 4",
@@ -6941,10 +6944,10 @@ const questionBank = {
       "q3": "What gas is produced when humans exhale and plants use during photosynthesis?",
       "a": "Carbon dioxide",
       "options": [
-        "Geology",
-        "Cirrus clouds",
         "Carbon dioxide",
-        "Rust"
+        "Oxygen",
+        "Nitrogen",
+        "Water vapor"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Carbon dioxide as the answer.",
       "source": "Teacher Science 4",
@@ -6957,10 +6960,10 @@ const questionBank = {
       "q3": "What is the continuous movement of water between Earth's surface and atmosphere called?",
       "a": "Water cycle",
       "options": [
-        "Nervous system",
-        "Storm surge",
         "Water cycle",
-        "Ecosystem"
+        "Evaporation",
+        "Condensation",
+        "Precipitation"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Water cycle as the answer.",
       "source": "Teacher Science 4",
@@ -6973,10 +6976,10 @@ const questionBank = {
       "q3": "What process occurs when water falls from clouds as rain, snow, sleet, or hail?",
       "a": "Precipitation",
       "options": [
-        "DNA",
-        "New Moon",
-        "Ecosystem",
-        "Precipitation"
+        "Precipitation",
+        "Evaporation",
+        "Condensation",
+        "Water cycle"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Precipitation as the answer.",
       "source": "Teacher Science 4",
@@ -6989,10 +6992,10 @@ const questionBank = {
       "q3": "What is the layer of gases surrounding Earth called?",
       "a": "Atmosphere",
       "options": [
-        "Seismologist",
-        "Decomposition",
         "Atmosphere",
-        "Nitrogen fixation"
+        "Hydrosphere",
+        "Lithosphere",
+        "Biosphere"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Atmosphere as the answer.",
       "source": "Teacher Science 4",
@@ -7006,9 +7009,9 @@ const questionBank = {
       "a": "Stratosphere",
       "options": [
         "Stratosphere",
-        "Competition",
-        "Neutron",
-        "Open circuit"
+        "Troposphere",
+        "Mesosphere",
+        "Thermosphere"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Stratosphere as the answer.",
       "source": "Teacher Science 4",
@@ -7021,10 +7024,10 @@ const questionBank = {
       "q3": "What is the study of interactions between living organisms and their environment?",
       "a": "Ecology",
       "options": [
-        "Lunar eclipse",
-        "ROYGBIV",
         "Ecology",
-        "Wheel and axle"
+        "Geology",
+        "Meteorology",
+        "Biology"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Ecology as the answer.",
       "source": "Teacher Science 4",
@@ -7037,10 +7040,10 @@ const questionBank = {
       "q3": "What is the scientific study of the Earth's physical structure, materials, and processes?",
       "a": "Geology",
       "options": [
-        "Loudness",
-        "Melting",
         "Geology",
-        "Insulators"
+        "Ecology",
+        "Meteorology",
+        "Seismology"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Geology as the answer.",
       "source": "Teacher Science 4",
@@ -7054,9 +7057,9 @@ const questionBank = {
       "a": "Chlorophyll",
       "options": [
         "Chlorophyll",
-        "Global warming",
-        "Lunar eclipse",
-        "Load"
+        "Stomata",
+        "Xylem",
+        "Phloem"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Chlorophyll as the answer.",
       "source": "Teacher Science 4",
@@ -7069,10 +7072,10 @@ const questionBank = {
       "q3": "What gas is released by plants during photosynthesis?",
       "a": "Oxygen",
       "options": [
-        "Mammals",
         "Oxygen",
-        "Effort",
-        "Telescope"
+        "Carbon dioxide",
+        "Nitrogen",
+        "Water vapor"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Oxygen as the answer.",
       "source": "Teacher Science 4",
@@ -7085,10 +7088,10 @@ const questionBank = {
       "q3": "What gas do plants use to make food?",
       "a": "Carbon dioxide",
       "options": [
-        "Subsoil",
-        "Like poles repel; opposite poles attract",
-        "Seismograph",
-        "Carbon dioxide"
+        "Carbon dioxide",
+        "Oxygen",
+        "Nitrogen",
+        "Water vapor"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Carbon dioxide as the answer.",
       "source": "Teacher Science 4",
@@ -7102,9 +7105,9 @@ const questionBank = {
       "a": "Condensation",
       "options": [
         "Condensation",
-        "Penumbra",
-        "Effort",
-        "Hydroelectric energy"
+        "Evaporation",
+        "Precipitation",
+        "Freezing"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Condensation as the answer.",
       "source": "Teacher Science 4",
@@ -7118,9 +7121,9 @@ const questionBank = {
       "a": "Evaporation",
       "options": [
         "Evaporation",
-        "Reforestation",
-        "Decomposer",
-        "Wheel and axle"
+        "Condensation",
+        "Precipitation",
+        "Melting"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Evaporation as the answer.",
       "source": "Teacher Science 4",
@@ -7133,10 +7136,10 @@ const questionBank = {
       "q3": "What force keeps planets in orbit around the Sun?",
       "a": "Gravity",
       "options": [
-        "Ecology",
-        "Decibel",
-        "Adaptation",
-        "Gravity"
+        "Gravity",
+        "Friction",
+        "Magnetic force",
+        "Buoyant force"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Gravity as the answer.",
       "source": "Teacher Science 4",
@@ -7149,10 +7152,10 @@ const questionBank = {
       "q3": "What is the spinning of Earth on its axis called?",
       "a": "Rotation",
       "options": [
-        "Circulatory system",
         "Rotation",
-        "Pitch",
-        "Switch"
+        "Revolution",
+        "Orbit",
+        "Earth’s axial tilt"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Rotation as the answer.",
       "source": "Teacher Science 4",
@@ -7166,9 +7169,9 @@ const questionBank = {
       "a": "Revolution",
       "options": [
         "Revolution",
-        "Tectonic plates",
-        "Vertebrate",
-        "Global warming"
+        "Rotation",
+        "Orbit",
+        "Earth’s axial tilt"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Revolution as the answer.",
       "source": "Teacher Science 4",
@@ -7181,10 +7184,10 @@ const questionBank = {
       "q3": "What is the path followed by a planet around the Sun called?",
       "a": "Orbit",
       "options": [
-        "Prism",
-        "Magnetic field",
         "Orbit",
-        "Stratus clouds"
+        "Rotation",
+        "Revolution",
+        "Gravity"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Orbit as the answer.",
       "source": "Teacher Science 4",
@@ -7197,10 +7200,10 @@ const questionBank = {
       "q3": "What is the study of earthquakes called?",
       "a": "Seismology",
       "options": [
-        "Nonrenewable resource",
-        "Global warming",
-        "Vibration",
-        "Seismology"
+        "Seismology",
+        "Geology",
+        "Volcanology",
+        "Meteorology"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Seismology as the answer.",
       "source": "Teacher Science 4",
@@ -7214,9 +7217,9 @@ const questionBank = {
       "a": "Sublimation",
       "options": [
         "Sublimation",
-        "Cumulonimbus clouds",
-        "Fossil",
-        "Epicenter"
+        "Deposition",
+        "Evaporation",
+        "Melting"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Sublimation as the answer.",
       "source": "Teacher Science 4",
@@ -7229,10 +7232,10 @@ const questionBank = {
       "q3": "What is the process in which a gas changes directly into a solid?",
       "a": "Deposition",
       "options": [
-        "Epicenter",
-        "Terrestrial planets",
         "Deposition",
-        "Parallel circuit"
+        "Sublimation",
+        "Condensation",
+        "Freezing"
       ],
       "exp": "The teacher-provided Science 4 reviewer gives Deposition as the answer.",
       "source": "Teacher Science 4",
@@ -7241,49 +7244,17 @@ const questionBank = {
   ]
 };
 
-// State Variables
-let currentQuizQuestions = [];
-let currentQuestionIndex = 0;
-let userAnswers = [];
-let scores = { easy: 0, medium: 0, hard: 0 };
-
-// Timer State Variables
-let timerMode = "overall"; // "none", "overall", "perQuestion"
-let timerInterval = null;
-let timeRemaining = 0;
-let timeSpentTotal = 0;
-let perQuestionTimeLimit = 0;
-
-// UI Control: Toggle Setup Panel
-function toggleTimerInputs() {
-    const mode = document.getElementById('timerModeSelect').value;
-    const overallGroup = document.getElementById('overallTimerGroup');
-    const perQGroup = document.getElementById('perQuestionTimerGroup');
-
-    if (mode === 'overall') {
-        overallGroup.classList.remove('hidden');
-        perQGroup.classList.add('hidden');
-    } else if (mode === 'perQuestion') {
-        overallGroup.classList.add('hidden');
-        perQGroup.classList.remove('hidden');
-    } else {
-        overallGroup.classList.add('hidden');
-        perQGroup.classList.add('hidden');
-    }
-}
-
-// Utility Functions
 function shuffleArray(array) {
-    const arr = [...array];
-    for (let i = arr.length - 1; i > 0; i--) {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
-    return arr;
+    return shuffled;
 }
 
 function getRandomQuestions(category, count) {
-    const coverageKey = 'bcopsQuizCoverage_v4_' + category;
+    const coverageKey = 'bcopsQuizCoverage_v6_' + category;
     let deck = [];
 
     try {
@@ -7491,14 +7462,92 @@ function saveAnswer(answer, isTimeOut = false) {
     let isCorrect = false;
 
     if (!isTimeOut && answer !== "") {
-        // Normalize answers so fill-in-the-blank accepts harmless differences
-        // in capitalization, punctuation, arrows, and extra spaces.
+        // Normalize answers so fill-in-the-blank is forgiving for Grade 4 students
+        // while still requiring the important science idea.
         const normalizeAnswer = (value) => String(value)
             .toLowerCase()
             .replace(/[→⇒]/g, " to ")
             .replace(/[^a-z0-9%]+/g, " ")
             .replace(/\s+/g, " ")
             .trim();
+
+        // Common Grade-4-friendly paraphrases. These make natural answers such as
+        // "it gets higher" equivalent to "becomes higher" without accepting unrelated terms.
+        const simplifyPhrase = (value) => normalizeAnswer(value)
+            .replace(/\bgets\b/g, "becomes")
+            .replace(/\bget\b/g, "become")
+            .replace(/\bgoes up\b/g, "increases")
+            .replace(/\bgo up\b/g, "increase")
+            .replace(/\bgrows\b/g, "increases")
+            .replace(/\bgrow\b/g, "increase")
+            .replace(/\bneeds\b/g, "requires")
+            .replace(/\bneed\b/g, "require")
+            .replace(/\bcan\b/g, "")
+            .replace(/\bmay\b/g, "")
+            .replace(/\bmight\b/g, "")
+            .replace(/\bcould\b/g, "")
+            .replace(/\bwould\b/g, "")
+            .replace(/\bwill\b/g, "")
+            .replace(/\bdoes not\b/g, "not")
+            .replace(/\bdoesnt\b/g, "not")
+            .replace(/\bdo not\b/g, "not")
+            .replace(/\bdont\b/g, "not")
+            .replace(/\bit is\b/g, "")
+            .replace(/\bit\b/g, "")
+            .replace(/\bthis\b/g, "")
+            .replace(/\bthat\b/g, "")
+            .replace(/\bthey\b/g, "")
+            .replace(/\bhe\b/g, "")
+            .replace(/\bshe\b/g, "")
+            .replace(/\bit becomes\b/g, "becomes")
+            .replace(/\bthe\b/g, "")
+            .replace(/\ban?\b/g, "")
+            .replace(/\bto\b/g, "")
+            .replace(/\bof\b/g, "")
+            .replace(/\bincreases\b/g, "increase")
+            .replace(/\bdecreases\b/g, "decrease")
+            .replace(/\bcontinues\b/g, "continue")
+            .replace(/\brequires\b/g, "require")
+            .replace(/\bproduces\b/g, "produce")
+            .replace(/\bchanges\b/g, "change")
+            .replace(/\bforms\b/g, "form")
+            .replace(/\boccurs\b/g, "occur")
+            .replace(/\babsorbs\b/g, "absorb")
+            .replace(/\breflects\b/g, "reflect")
+            .replace(/\btransfers\b/g, "transfer")
+            .replace(/\b\s+/g, " ")
+            .trim();
+
+        // Remove words that are already supplied by the question. This allows a child
+        // to answer "becomes higher" instead of repeating "the pitch becomes higher".
+        const removeQuestionWords = (answer, question) => {
+            const qWords = new Set(simplifyPhrase(question).split(" ").filter(w => w.length > 2));
+            return simplifyPhrase(answer).split(" ").filter(w => !qWords.has(w)).join(" ").trim();
+        };
+
+        const phraseMatchesForgivingly = (userValue, validValue) => {
+            const a = simplifyPhrase(userValue);
+            const b = simplifyPhrase(validValue);
+            if (!a || !b) return false;
+            if (a === b) return true;
+
+            // Also compare the essential answer after removing words already present in the question.
+            const aq = removeQuestionWords(userValue, q.q);
+            const bq = removeQuestionWords(validValue, q.q);
+            if (aq && bq && aq === bq) return true;
+
+            // Allow a short natural answer when it contains all essential content words from
+            // the expected answer. This is intentionally conservative: at least 2 content words
+            // must match for phrase answers, or the entire essential answer must be one word.
+            const content = text => simplifyPhrase(text).split(" ").filter(w => w.length > 2);
+            const ac = new Set(content(userValue));
+            const bc = content(validValue);
+            if (bc.length >= 2) {
+                const matched = bc.filter(w => ac.has(w)).length;
+                return matched === bc.length;
+            }
+            return false;
+        };
 
         // Accept harmless singular/plural differences for fill-in answers.
         // This covers common forms such as kidney/kidneys and body/bodies,
@@ -7545,6 +7594,12 @@ function saveAnswer(answer, isTimeOut = false) {
         });
 
         isCorrect = acceptedForms.has(normalizeAnswer(answer));
+
+        // Grade-4-friendly phrase matching for hard/fill-in questions.
+        // This accepts natural paraphrases but does not turn different science terms into matches.
+        if (!isCorrect) {
+            isCorrect = validAnswers.some(validAns => phraseMatchesForgivingly(answer, validAns));
+        }
     }
 
     if (isCorrect) {
